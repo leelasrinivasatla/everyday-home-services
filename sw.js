@@ -1,5 +1,5 @@
 // Everyday Home Services - PWA Service Worker
-const CACHE_NAME = 'everyday-cache-v2';
+const CACHE_NAME = 'everyday-cache-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -42,22 +42,17 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Navigation preload / cache-first with network fallback
   if (event.request.method !== 'GET') return;
+  // Network-first for html/css/js to ensure instant updates, cache fallback for offline
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        // Fetch in background to revalidate
-        fetch(event.request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
-            }
-          })
-          .catch(() => {});
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(() => caches.match('./index.html'));
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const resClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, resClone));
+        }
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request).then((res) => res || caches.match('./index.html')))
   );
 });
