@@ -372,6 +372,213 @@ input, select, textarea {
   scrollbar-width: none;
 }
 
+/* ==========================================================================
+   2.1 HOME TAB STOREFRONT & DISCOVERY COMPONENTS
+   ========================================================================== */
+
+.home-live-tracker-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.home-live-tracker-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.22);
+}
+
+.tracker-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.tracker-pulse-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.tracker-banner-text {
+  min-width: 0;
+}
+
+.tracker-banner-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.tracker-eta-badge {
+  background: #059669;
+  color: #ffffff;
+  font-size: 0.70rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tracker-banner-sub {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  margin: 3px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-banner-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--trans-fast);
+}
+
+.btn-banner-track:hover {
+  background: #f1f5f9;
+}
+
+.home-hero-card {
+  background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.hero-headline {
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  color: #ffffff;
+}
+
+.hero-subhead {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin: 0 0 18px;
+}
+
+.hero-quick-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 10px 14px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 0.84rem;
+  width: 100%;
+}
+
+.hero-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.home-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.home-trust-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.trust-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: #f0fdf4;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trust-card-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+}
+
+.trust-card-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin: 0;
+}
+
 .catalog-filters-bar::-webkit-scrollbar {
   display: none;
 }
@@ -1140,13 +1347,15 @@ input, select, textarea {
     order: 2;
   }
 
-  /* When on desktop, the active catalog or vault or account tab displays on the left panel (480px) */
+  /* When on desktop, the active home, catalog, vault, or account tab displays on the left panel (520px) */
+  #tabViewHome.active,
   #tabViewServices.active,
   #tabViewVault.active,
   #tabViewAccount.active {
     display: block !important;
-    width: 480px;
+    width: 520px;
     min-width: 480px;
+    max-width: 560px;
     height: 100%;
     overflow-y: auto;
     border-right: 1px solid var(--border-light);

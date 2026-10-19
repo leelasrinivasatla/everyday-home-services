@@ -321,6 +321,7 @@
 
     // Rehydrate active persona and order tracker state
     switchPersonaRole(STATE.currentUser.role || 'customer');
+    syncHomeActiveTracker();
     if (STATE.currentUser.activeOrder) {
       const trackerCard = document.getElementById('activeJobTrackerCard');
       if (trackerCard) trackerCard.style.display = 'block';
@@ -1676,8 +1677,9 @@
   // Mobile & Desktop Tab Navigation Router
   function setupMobileTabbar() {
     const tabMap = {
-      map: 'tabViewMap',
+      home: 'tabViewHome',
       services: 'tabViewServices',
+      map: 'tabViewMap',
       vault: 'tabViewVault',
       account: 'tabViewAccount'
     };
@@ -1693,7 +1695,7 @@
         screen.classList.remove('active');
       });
 
-      const activeScreenId = tabMap[tabName] || 'tabViewMap';
+      const activeScreenId = tabMap[tabName] || 'tabViewHome';
       const activeScreen = document.getElementById(activeScreenId);
       if (activeScreen) {
         activeScreen.classList.add('active');
@@ -1710,6 +1712,8 @@
         renderVaultList();
       } else if (tabName === 'account') {
         syncAccountTabDetails();
+      } else if (tabName === 'home') {
+        syncHomeActiveTracker();
       }
     }
 
@@ -1720,20 +1724,43 @@
       });
     });
 
+    // Home Active Tracker Banner click: jumps straight to Live Map & Track
+    document.getElementById('homeActiveTrackerBanner')?.addEventListener('click', () => {
+      activateCustomerTab('map');
+    });
+
+    document.getElementById('btnHomeBannerTrack')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      activateCustomerTab('map');
+    });
+
     // Floating pill on map: "Browse All Services"
     document.getElementById('btnMapQuickBrowse')?.addEventListener('click', () => {
       activateCustomerTab('services');
     });
 
-    // Topbar brand logo click navigates to Map
+    // Topbar brand logo click navigates to Home
     document.getElementById('topbarBrandBtn')?.addEventListener('click', () => {
-      activateCustomerTab('map');
+      activateCustomerTab('home');
     });
 
     // Topbar avatar click on mobile directly opens Account tab!
     document.getElementById('userMenuBtn')?.addEventListener('click', () => {
       activateCustomerTab('account');
     });
+
+    // Quick search filter on Home tab
+    const homeSearchInput = document.getElementById('homeHeroSearchInput');
+    if (homeSearchInput) {
+      homeSearchInput.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        const homeCards = document.querySelectorAll('#tabViewHome .app-service-card');
+        homeCards.forEach(card => {
+          const text = (card.innerText || '').toLowerCase();
+          card.style.display = (!q || text.includes(q)) ? '' : 'none';
+        });
+      });
+    }
 
     // Account tab buttons in Account screen
     document.getElementById('btnOpenAuthFromTab')?.addEventListener('click', () => {
@@ -1797,6 +1824,25 @@
     });
   }
 
+  function syncHomeActiveTracker() {
+    const banner = document.getElementById('homeActiveTrackerBanner');
+    if (!banner) return;
+    if (STATE.currentUser.activeOrder) {
+      banner.style.display = 'flex';
+      const etaEl = document.getElementById('homeBannerEta');
+      const jobTitleEl = document.getElementById('homeBannerJobTitle');
+      if (etaEl) {
+        const mins = Math.ceil(STATE.driver.etaMinutes || 6);
+        etaEl.textContent = `Arriving in ${mins} mins`;
+      }
+      if (jobTitleEl) {
+        jobTitleEl.textContent = `${STATE.currentUser.activeOrder.serviceName || 'Water Softener Salt Delivery'} • ${STATE.currentUser.activeOrder.status || 'Stop #2'}`;
+      }
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
   // ============================================================================
   // 8. REALTIME SILENT ENGINE (VEHICLE GPS PROGRESSION)
   // ============================================================================
@@ -1831,6 +1877,8 @@
         STATE.driver.etaMinutes -= 0.08;
         const etaText = document.getElementById('drawerEtaValue');
         if (etaText) etaText.textContent = `${Math.ceil(STATE.driver.etaMinutes)} mins away`;
+        const homeEta = document.getElementById('homeBannerEta');
+        if (homeEta) homeEta.textContent = `Arriving in ${Math.ceil(STATE.driver.etaMinutes)} mins`;
       }
     }, 2500);
   }

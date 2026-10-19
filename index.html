@@ -97,9 +97,186 @@
     <div class="portal-root active" id="portalCustomerApp">
       
       <!-- ================================================================== -->
+      <!-- TAB SCREEN 0: HOME / EXPLORE & INSTANT BOOK (CONTEXTUAL STOREFRONT)-->
+      <!-- ================================================================== -->
+      <section class="customer-tab-screen active" id="tabViewHome" aria-label="Home and Instant Booking">
+        <div class="tab-screen-container">
+
+          <!-- Dynamic Active Job Tracker Banner (Pulse State) -->
+          <div class="home-live-tracker-banner" id="homeActiveTrackerBanner" role="button" tabindex="0" title="Click to view live GPS tracking on map">
+            <div class="tracker-banner-left">
+              <div class="tracker-pulse-ring">
+                <span class="live-pulse-dot"></span>
+              </div>
+              <div class="tracker-banner-text">
+                <div class="tracker-banner-title">
+                  <span>Marcus Chen &bull; Van #4</span>
+                  <span class="tracker-eta-badge" id="homeBannerEta">Arriving in 6 mins</span>
+                </div>
+                <p class="tracker-banner-sub" id="homeBannerJobTitle">Water Softener Salt Delivery &bull; Stop #2</p>
+              </div>
+            </div>
+            <button class="btn-banner-track" id="btnHomeBannerTrack" type="button">
+              <span>Live Map</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+
+          <!-- Hero Discovery Banner -->
+          <div class="home-hero-card">
+            <div class="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Verified Neighborhood Services</span>
+            </div>
+            <h1 class="hero-headline">Everyday Home Utility Chores, Done For You</h1>
+            <p class="hero-subhead">Curbside bin placement, water softener salt refills, and bulk haul away. Vetted local pros with real-time GPS tracking and photo proof.</p>
+            <div class="hero-quick-search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="homeHeroSearchInput" placeholder="Search service (e.g. salt, bins, bulbs, haul away)..." class="hero-search-input">
+            </div>
+          </div>
+
+          <!-- Section: Quick Services -->
+          <div class="tab-section-header">
+            <div>
+              <h2 class="tab-section-title">Popular On-Demand Services</h2>
+              <p class="tab-section-sub">Select a routine utility chore for instant same-week scheduling.</p>
+            </div>
+          </div>
+
+          <div class="service-app-cards-list">
+            
+            <!-- Service 1: Bin Take-Out -->
+            <div class="app-service-card" data-service-key="bin" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/bin_takeout.jpg" alt="Bin Take-Out" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Bin Take-Out & Return</h3>
+                  <span class="app-card-price">$49 / mo</span>
+                </div>
+                <p class="app-card-sub">Curbside municipal placement & garage return</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Weekly Routine &bull; Photo Proof</span>
+                  <button class="btn-card-book" data-open-book="bin">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 2: Salt Refill -->
+            <div class="app-service-card" data-service-key="salt" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/salt_refill.jpg" alt="Water Softener Salt" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Water Softener Salt Delivery</h3>
+                  <span class="app-card-price">$89 / mo</span>
+                </div>
+                <p class="app-card-sub">2x 20kg bags delivered to basement & brine tank filled</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Monthly Essential &bull; Signature Sign-off</span>
+                  <button class="btn-card-book" data-open-book="salt">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 3: Bulb Change -->
+            <div class="app-service-card" data-service-key="bulb" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/bulb_change.jpg" alt="Bulb Replacement" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">High-Ceiling Bulb Replacement</h3>
+                  <span class="app-card-price">$39 / visit</span>
+                </div>
+                <p class="app-card-sub">Exterior coach fixtures & foyer chandeliers safely serviced</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Safety Ladder &bull; LED Included</span>
+                  <button class="btn-card-book" data-open-book="bulb">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 4: Junk Haul -->
+            <div class="app-service-card" data-service-key="junk" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/junk_haul.jpg" alt="Junk Haul Away" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Eco Box & Clutter Haul Away</h3>
+                  <span class="app-card-price">$69 / load</span>
+                </div>
+                <p class="app-card-sub">Amazon delivery boxes, garage clutter & broken appliances</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">100% Eco-Recycled</span>
+                  <button class="btn-card-book" data-open-book="junk">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section: Trust & Guarantees -->
+          <div class="tab-section-header" style="margin-top: 32px;">
+            <div>
+              <h2 class="tab-section-title">The Everyday Standard</h2>
+              <p class="tab-section-sub">Why homeowners and property managers trust our neighborhood specialists.</p>
+            </div>
+          </div>
+
+          <div class="home-trust-grid">
+            <div class="home-trust-card">
+              <div class="trust-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div>
+                <h4 class="trust-card-title">100% Background Checked</h4>
+                <p class="trust-card-desc">Every technician passes criminal background checks and vehicle safety compliance.</p>
+              </div>
+            </div>
+
+            <div class="home-trust-card">
+              <div class="trust-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div>
+                <h4 class="trust-card-title">Real-Time GPS Tracking</h4>
+                <p class="trust-card-desc">Know the exact arrival minute and watch your service van en route on live map.</p>
+              </div>
+            </div>
+
+            <div class="home-trust-card">
+              <div class="trust-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <div>
+                <h4 class="trust-card-title">Cryptographic Geofence</h4>
+                <p class="trust-card-desc">Audited photo records with tamper-proof coordinates stored in your personal vault.</p>
+              </div>
+            </div>
+
+            <div class="home-trust-card">
+              <div class="trust-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div>
+                <h4 class="trust-card-title">$2M Liability Insured</h4>
+                <p class="trust-card-desc">Full coverage protection on every visit with a 100% satisfaction guarantee.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================== -->
       <!-- TAB SCREEN 1: MAP & REALTIME DISPATCH TRACKER                      -->
       <!-- ================================================================== -->
-      <section class="customer-tab-screen active" id="tabViewMap" aria-label="Live map and tracking">
+      <section class="customer-tab-screen" id="tabViewMap" aria-label="Live map and tracking">
         
         <!-- Real Interactive Leaflet Map Canvas -->
         <div class="app-map-canvas-container" id="appMapCanvasContainer">
@@ -674,13 +851,17 @@
   <!-- MOBILE BOTTOM NAVIGATION (NATIVE APP FEEL)                             -->
   <!-- ====================================================================== -->
   <nav class="mobile-native-tabbar" id="mobileNativeTabbar" aria-label="Mobile Navigation">
-    <button class="tab-item active" data-tab-action="map">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-      <span>Map & Track</span>
+    <button class="tab-item active" data-tab-action="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Home</span>
     </button>
     <button class="tab-item" data-tab-action="services">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
       <span>Services</span>
+    </button>
+    <button class="tab-item" data-tab-action="map">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      <span>Track</span>
     </button>
     <button class="tab-item" data-tab-action="vault">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
