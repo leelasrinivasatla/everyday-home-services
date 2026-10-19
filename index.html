@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Everyday Home Services | Live On-Demand Utility Maintenance</title>
+  <meta name="description" content="On-demand recurring home utility maintenance. Real-time GPS tracking, weekly bin placement, water softener salt delivery, bulb replacement, and junk hauling.">
+  <link rel="canonical" href="https://www.everydayhelp.com/">
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Everyday">
+  <link rel="apple-touch-icon" href="assets/app-icon.svg">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Everyday Home Services | Realtime Utility Platform">
+  <meta property="og:description" content="On-demand recurring home services with real-time GPS tracking, verified photo proof, and vector signatures.">
+  <meta property="og:image" content="assets/bin_takeout.jpg">
+
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Local Leaflet Real Map CSS & JS -->
+  <link rel="stylesheet" href="assets/leaflet.css">
+  <script src="assets/leaflet.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-body">
+
+  <!-- ====================================================================== -->
+  <!-- NATIVE APP TOP BAR (MOBILE & DESKTOP)                                  -->
+  <!-- ====================================================================== -->
+  <header class="app-topbar" id="appTopbar">
+    <div class="topbar-inner">
+      
+      <!-- Brand Minimalist Mark -->
+      <div class="topbar-brand" id="topbarBrandBtn">
+        <div class="brand-square-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <span class="brand-wordmark">Everyday</span>
+      </div>
+
+      <!-- Realtime Interactive Location Selector -->
+      <div class="location-selector-trigger" id="locationSelectorTrigger" role="button" tabindex="0" title="Select or detect address">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span class="location-display-text" id="activeLocationText">85 King Ave, Oakville</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+
+      <!-- Auto Detect GPS Button (1-Click) -->
+      <button class="btn-gps-autodetect" id="btnGpsAutodetect" title="Auto-detect current GPS location" aria-label="Auto detect location">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="22" y1="12" x2="18" y2="12"></line>
+          <line x1="6" y1="12" x2="2" y2="12"></line>
+          <line x1="12" y1="6" x2="12" y2="2"></line>
+          <line x1="12" y1="22" x2="12" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Right Topbar Items: Live Beacon & User Avatar / Sign In -->
+      <div class="topbar-right">
+        
+        <div class="live-dispatch-badge" title="Active neighborhood route">
+          <span class="live-pulse-dot"></span>
+          <span>Live Radar</span>
+        </div>
+
+        <div class="user-avatar-trigger" id="userMenuBtn" role="button" tabindex="0" title="Account Menu">
+          <span class="user-avatar-text" id="topbarAvatarText">AT</span>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ====================================================================== -->
+  <!-- MAIN APP CONTAINER (SPLIT ON DESKTOP, MAP-FIRST ON MOBILE)             -->
+  <!-- ====================================================================== -->
+  <main class="app-viewport-shell" id="appViewportShell">
+
+    <!-- ==================================================================== -->
+    <!-- PORTAL 1: CUSTOMER MAP & SERVICES WORKSPACE                          -->
+    <!-- ==================================================================== -->
+    <div class="portal-root active" id="portalCustomerApp">
+      
+      <!-- DESKTOP LEFT SIDEBAR / MOBILE SLIDING APP DRAWER -->
+      <aside class="app-sidebar-drawer" id="appSidebarDrawer">
+        
+        <!-- Mobile Drawer Grabber / Drag Indicator -->
+        <div class="drawer-grabber-bar" id="drawerGrabberBar"></div>
+
+        <!-- Scrollable Drawer Content -->
+        <div class="drawer-scroll-body">
+          
+          <!-- SUB-VIEW A: ACTIVE REALTIME SERVICE TRACKING CARD -->
+          <div class="active-job-tracker-card" id="activeJobTrackerCard">
+            <div class="job-tracker-header">
+              <div class="job-status-pill">
+                <span class="live-pulse-dot"></span>
+                <span>En Route &bull; Stop #2</span>
+              </div>
+              <div class="job-eta-text" id="drawerEtaValue">6 mins away</div>
+            </div>
+
+            <div class="job-technician-row">
+              <div class="tech-avatar-circle">MC</div>
+              <div class="tech-details-col">
+                <div class="tech-fullname">Marcus Chen &bull; Van #4</div>
+                <div class="tech-vehicle-sub">2022 Ford Transit (CVBA 842) &bull; 4.98 Rating</div>
+                <div class="tech-job-title" id="drawerJobTitle">Water Softener Salt Refill</div>
+              </div>
+            </div>
+
+            <!-- Realtime Stepper -->
+            <div class="job-milestones-row">
+              <div class="milestones-track-rail">
+                <div class="milestones-track-progress"></div>
+              </div>
+              <div class="milestone-node done">
+                <span class="node-dot"></span>
+                <span class="node-lbl">Dispatched</span>
+              </div>
+              <div class="milestone-node active">
+                <span class="node-dot"></span>
+                <span class="node-lbl">En Route</span>
+              </div>
+              <div class="milestone-node">
+                <span class="node-dot"></span>
+                <span class="node-lbl">Arriving</span>
+              </div>
+              <div class="milestone-node">
+                <span class="node-dot"></span>
+                <span class="node-lbl">Proof Signed</span>
+              </div>
+            </div>
+
+            <!-- Technician Contact Buttons -->
+            <div class="job-actions-row">
+              <button class="btn-job-action" id="btnCallTech">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>Call Technician</span>
+              </button>
+              <button class="btn-job-action" id="btnInstructionsTech">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span>Entry Note</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- SECTION: RECURRING CHORES & SERVICES (Actionable Cards) -->
+          <div class="drawer-section-title">
+            <span>On-Demand & Recurring Services</span>
+            <span class="drawer-section-sub">Tap to customize</span>
+          </div>
+
+          <div class="service-app-cards-list">
+            
+            <!-- Service 1: Bin Take-Out -->
+            <div class="app-service-card" data-service-key="bin" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/bin_takeout.jpg" alt="Bin Take-Out" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Bin Take-Out & Return</h3>
+                  <span class="app-card-price">$49 / mo</span>
+                </div>
+                <p class="app-card-sub">Curbside municipal placement & garage return</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Weekly Routine &bull; Photo Proof</span>
+                  <button class="btn-card-book" data-open-book="bin">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 2: Salt Refill -->
+            <div class="app-service-card" data-service-key="salt" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/salt_refill.jpg" alt="Water Softener Salt" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Water Softener Salt Delivery</h3>
+                  <span class="app-card-price">$89 / mo</span>
+                </div>
+                <p class="app-card-sub">2x 20kg bags delivered to basement & brine tank filled</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Monthly Essential &bull; Signature Sign-off</span>
+                  <button class="btn-card-book" data-open-book="salt">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 3: Bulb Change -->
+            <div class="app-service-card" data-service-key="bulb" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/bulb_change.jpg" alt="Bulb Replacement" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Bulb Replacement & High Reach</h3>
+                  <span class="app-card-price">Included in Duo</span>
+                </div>
+                <p class="app-card-sub">Foyer ceiling chandeliers, exterior coach lanterns & ladders</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Safety & Ladders &bull; 12ft Reach</span>
+                  <button class="btn-card-book" data-open-book="bulb">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 4: Junk Pickup -->
+            <div class="app-service-card" data-service-key="junk" tabindex="0">
+              <div class="app-card-thumb">
+                <img src="assets/junk_pickup.jpg" alt="Curbside Junk Hauling" loading="lazy">
+              </div>
+              <div class="app-card-info">
+                <div class="app-card-topline">
+                  <h3 class="app-card-title">Curbside Junk & Box Hauling</h3>
+                  <span class="app-card-price">Included in Duo</span>
+                </div>
+                <p class="app-card-sub">Flattened moving cartons & household clutter removal</p>
+                <div class="app-card-bottom-row">
+                  <span class="app-card-badge">Eco Hauling &bull; Responsible Recycle</span>
+                  <button class="btn-card-book" data-open-book="junk">Book Service</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- SECTION: SUBSCRIPTION TIERS (Single vs Duo vs Elite) -->
+          <div class="drawer-section-title" style="margin-top: 24px;">
+            <span>Subscription Bundles</span>
+            <span class="drawer-section-sub">Save up to 40%</span>
+          </div>
+
+          <div class="subscription-compact-tiers">
+            <div class="bundle-pill-card popular" data-plan-key="basic_plus">
+              <div class="bundle-badge-popular">MOST POPULAR BUNDLE</div>
+              <div class="bundle-header-row">
+                <div class="bundle-title-col">
+                  <strong class="bundle-title">Everyday Duo &bull; 2 Services</strong>
+                  <span class="bundle-tagline">Save 35% on essential recurring utility chores</span>
+                </div>
+                <div class="bundle-price-col">
+                  <span class="bundle-price-val">$89</span>
+                  <span class="bundle-price-freq">/ mo</span>
+                </div>
+              </div>
+              <div class="bundle-features-grid">
+                <div class="bundle-feat-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Weekly bin take-out & garage return</span>
+                </div>
+                <div class="bundle-feat-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Monthly 2x 20kg salt delivered & filled</span>
+                </div>
+                <div class="bundle-feat-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Audited photo proof & GPS geofence stamp</span>
+                </div>
+              </div>
+              <button class="btn-bundle-select" data-open-book="salt">Select Everyday Duo</button>
+            </div>
+
+            <div class="bundle-pill-card" data-plan-key="premium">
+              <div class="bundle-header-row">
+                <div class="bundle-title-col">
+                  <strong class="bundle-title">Whole Home Elite &bull; All 4 Services</strong>
+                  <span class="bundle-tagline">Complete utility maintenance for hands-off homeowners</span>
+                </div>
+                <div class="bundle-price-col">
+                  <span class="bundle-price-val">$149</span>
+                  <span class="bundle-price-freq">/ mo</span>
+                </div>
+              </div>
+              <div class="bundle-features-grid">
+                <div class="bundle-feat-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Curbside bins + 2x salt bags refill</span>
+                </div>
+                <div class="bundle-feat-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>High ceiling & exterior coach bulb replacement</span>
+                </div>
+                <div class="bundle-feat-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Monthly curbside box & clutter haul away</span>
+                </div>
+              </div>
+              <button class="btn-bundle-select" data-open-book="premium">Select Whole Home Elite</button>
+            </div>
+          </div>
+
+          <!-- SECTION: AUDITED PROOF VAULT -->
+          <div class="drawer-section-title" style="margin-top: 24px;">
+            <span>Past Service Proof Vault</span>
+            <span class="drawer-section-sub">Verified GPS & Photos</span>
+          </div>
+
+          <div class="vault-compact-list" id="vaultCompactList">
+            <!-- Dynamically populated from STATE.bookings -->
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- REAL INTERACTIVE LEAFLET MAP CANVAS -->
+      <section class="app-map-canvas-container" id="appMapCanvasContainer">
+        
+        <!-- Mobile Category Quick Filter Horizontal Bar (Floating over map) -->
+        <div class="mobile-map-floating-filters" id="mobileMapFloatingFilters">
+          <button class="map-filter-chip active" data-filter="all">All Services</button>
+          <button class="map-filter-chip" data-filter="curbside">Curbside Bins ($49)</button>
+          <button class="map-filter-chip" data-filter="water">Salt Refills ($89)</button>
+          <button class="map-filter-chip" data-filter="safety">High Bulbs</button>
+          <button class="map-filter-chip" data-filter="hauling">Junk Haul</button>
+        </div>
+
+        <!-- The Real Leaflet Map DIV -->
+        <div id="realLeafletMap" class="real-leaflet-map-element" role="region" aria-label="Interactive service map"></div>
+
+        <!-- Map Control Overlay Buttons -->
+        <div class="map-floating-actions">
+          <button class="btn-map-control" id="btnRecenterHome" title="Center map on your address" aria-label="Center on property">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b0f19" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+          </button>
+          <button class="btn-map-control" id="btnRecenterDriver" title="Center map on driver Marcus Chen" aria-label="Center on driver">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- PORTAL 2: PARTNER / DRIVER FIELD TERMINAL                            -->
+    <!-- ==================================================================== -->
+    <div class="portal-root" id="portalPartnerTerminal" style="display: none;">
+      
+      <!-- SUB-VIEW 1: PENDING REVIEW SCREEN (David Miller) -->
+      <div class="driver-fullpage-container" id="partnerPendingScreen" style="display: none;">
+        <div class="compliance-review-box">
+          <div class="compliance-icon-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <span class="status-badge-pending">Application In Compliance Review</span>
+          <h2 class="compliance-headline">David Miller &bull; Driver Verification</h2>
+          <p class="compliance-desc">
+            Your commercial cargo van and driver profile are being verified by operations. Route terminal access unlocks automatically once approved.
+          </p>
+
+          <div class="compliance-checklist-card">
+            <div class="c-step done">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Vehicle Profile: 2023 Ram ProMaster 2500 (BXYA 109) &ndash; Verified</span>
+            </div>
+            <div class="c-step pending">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+              <span>Criminal Background Check: Processing via Checkr (Est. 24h)</span>
+            </div>
+            <div class="c-step pending">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+              <span>Commercial Liability Coverage: In Review</span>
+            </div>
+          </div>
+
+          <button class="btn-app-secondary" id="btnPendingExitToCustomer">Switch to Customer View</button>
+        </div>
+      </div>
+
+      <!-- SUB-VIEW 2: ACTIVE DRIVER FIELD APP (Marcus Chen) -->
+      <div class="driver-fullpage-container" id="partnerActiveScreen" style="display: none;">
+        <div class="driver-terminal-inner">
+          
+          <div class="driver-top-strip">
+            <div class="driver-info-wrap">
+              <div class="driver-avatar-box">MC</div>
+              <div>
+                <div class="driver-title-name">Marcus Chen &bull; Van Route #4</div>
+                <div class="driver-car-sub">2022 Ford Transit (CVBA 842) &bull; QEW Corridor</div>
+              </div>
+            </div>
+
+            <div class="driver-status-toggle" id="driverDutyBtn">
+              <span class="live-pulse-dot"></span>
+              <span id="driverDutyLabel">ONLINE &bull; DISPATCH READY</span>
+            </div>
+          </div>
+
+          <!-- Driver Route KPIs -->
+          <div class="driver-stats-bar">
+            <div class="driver-stat-pill">
+              <span class="stat-lbl">Today's Route</span>
+              <span class="stat-val">10 Homes</span>
+            </div>
+            <div class="driver-stat-pill">
+              <span class="stat-lbl">Completed</span>
+              <span class="stat-val" id="driverStopsCompletedLabel" style="color: var(--emerald-primary);">1 / 10</span>
+            </div>
+            <div class="driver-stat-pill">
+              <span class="stat-lbl">Distance</span>
+              <span class="stat-val">42 km</span>
+            </div>
+            <div class="driver-stat-pill">
+              <span class="stat-lbl">Est. Payout</span>
+              <span class="stat-val" style="color: var(--emerald-primary);">$165.00</span>
+            </div>
+          </div>
+
+          <!-- 10 Sequenced Stops Feed -->
+          <div class="driver-stops-feed" id="driverStopsFeed">
+            <!-- Dynamically populated stops 1 to 10 -->
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- PORTAL 3: OPERATIONS HQ & ADMIN CONSOLE                              -->
+    <!-- ==================================================================== -->
+    <div class="portal-root" id="portalAdminHQ" style="display: none;">
+      <div class="admin-shell-container">
+        <div class="admin-shell-inner">
+        
+          <div class="admin-header-row">
+            <div>
+              <h1 class="admin-h1">Operations HQ & Live Logistics</h1>
+              <p class="admin-p">Real-time route oversight, partner compliance governance, and customer proof vault.</p>
+            </div>
+            <div class="admin-header-actions">
+              <span class="status-badge-verified">All Systems Live</span>
+              <button class="btn-app-secondary" id="btnAdminExit">Back to App</button>
+            </div>
+          </div>
+
+          <!-- Segmented Tab Navigation -->
+          <div class="admin-tabs-bar">
+            <button class="admin-nav-btn active" data-admin-tab="overview">Overview & KPIs</button>
+            <button class="admin-nav-btn" data-admin-tab="approvals">Partner Approvals <span class="badge-amber-pill" id="adminPendingCounter">1</span></button>
+            <button class="admin-nav-btn" data-admin-tab="audit">Proof Audit Vault</button>
+            <button class="admin-nav-btn" data-admin-tab="webhooks">Webhook Stream</button>
+          </div>
+
+          <!-- Tab 1: Overview -->
+          <div class="admin-panel active" id="adminPanelOverview">
+            <div class="admin-kpi-grid">
+              <div class="kpi-card">
+                <span class="kpi-title">Monthly Recurring Revenue</span>
+                <span class="kpi-val">$18,420</span>
+                <span class="kpi-sub">+14.2% MoM &bull; 142 Active Homes</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-title">Route Fleet Progress</span>
+                <span class="kpi-val" id="adminRouteProgressVal">10%</span>
+                <span class="kpi-sub" id="adminRouteProgressSub">1 of 10 stops completed</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-title">Proof Verification Rate</span>
+                <span class="kpi-val" style="color: var(--emerald-primary);">100%</span>
+                <span class="kpi-sub">Zero compliance exceptions</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-title">Active Fleet Van</span>
+                <span class="kpi-val">Van #4 (Marcus Chen)</span>
+                <span class="kpi-sub">1 Applicant pending review</span>
+              </div>
+            </div>
+
+            <div class="admin-data-card" style="margin-top: 20px;">
+              <div class="data-card-header">
+                <h3>Live Route Van #4 Status &bull; Mississauga &rarr; Oakville &rarr; Toronto</h3>
+                <button class="btn-app-secondary" id="btnAdminBroadcastWeather">Broadcast 15m Weather Alert</button>
+              </div>
+              <div style="padding: 20px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 8px;">
+                  <span id="adminRouteProgressText">1 of 10 stops completed (10%)</span>
+                  <span>Active Stop: 85 King Ave, Oakville</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" id="adminProgressBarFill" style="width: 10%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Approvals -->
+          <div class="admin-panel" id="adminPanelApprovals" style="display: none;">
+            <div class="admin-data-card">
+              <div class="data-card-header">
+                <h3>Partner Applications & Compliance State Machine</h3>
+              </div>
+              <div class="table-scroll-wrapper">
+                <table class="clean-table">
+                  <thead>
+                    <tr>
+                      <th>Partner</th>
+                      <th>Vehicle & Cargo</th>
+                      <th>Capabilities</th>
+                      <th>Background Status</th>
+                      <th>Compliance</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminPartnerTbody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Proof Audit -->
+          <div class="admin-panel" id="adminPanelAudit" style="display: none;">
+            <div class="admin-data-card">
+              <div class="data-card-header">
+                <h3>Customer Proof of Service Records & Geofence Deltas</h3>
+              </div>
+              <div class="table-scroll-wrapper">
+                <table class="clean-table">
+                  <thead>
+                    <tr>
+                      <th>Job ID</th>
+                      <th>Service</th>
+                      <th>Address</th>
+                      <th>Technician</th>
+                      <th>Photo Proof</th>
+                      <th>Signature</th>
+                      <th>GPS Delta</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminAuditTbody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Webhook Stream -->
+          <div class="admin-panel" id="adminPanelWebhooks" style="display: none;">
+            <div class="admin-data-card">
+              <div class="data-card-header">
+                <h3>Automated Dispatch Webhooks & SMS Broadcasts</h3>
+                <button class="btn-app-secondary" id="btnAdminTriggerPing">Dispatch Telemetry Ping</button>
+              </div>
+              <div class="webhook-list" id="adminWebhookList">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ====================================================================== -->
+  <!-- MOBILE BOTTOM NAVIGATION (NATIVE APP FEEL)                             -->
+  <!-- ====================================================================== -->
+  <nav class="mobile-native-tabbar" id="mobileNativeTabbar" aria-label="Mobile Navigation">
+    <button class="tab-item active" data-tab-action="map">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      <span>Map & Track</span>
+    </button>
+    <button class="tab-item" data-tab-action="services">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Services</span>
+    </button>
+    <button class="tab-item" data-tab-action="vault">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Vault</span>
+    </button>
+    <button class="tab-item" data-tab-action="account">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Account</span>
+    </button>
+  </nav>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 1: REALTIME LOCATION SELECTOR & AUTO DETECT              -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalLocationPicker" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title">Select Service Location</h3>
+        <button class="btn-sheet-close" id="btnCloseLocationModal" aria-label="Close dialog">&times;</button>
+      </div>
+      
+      <div class="modal-sheet-content">
+        <!-- 1-Click Auto-Detect GPS -->
+        <button class="btn-autodetect-row" id="btnModalAutoDetectGPS">
+          <div class="autodetect-icon-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+          </div>
+          <div style="text-align: left;">
+            <strong>Use Current GPS Location</strong>
+            <span style="font-size: 0.74rem; color: #94a3b8; display: block;">Detect coordinates via browser geolocation</span>
+          </div>
+        </button>
+
+        <!-- Manual Address Search Input -->
+        <div style="margin: 16px 0 10px;">
+          <label for="inputManualSearchAddress" class="app-field-label">Or Search Street Address</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="inputManualSearchAddress" class="app-input-clean" placeholder="e.g. 85 King Ave, Oakville or L6J 1X2">
+            <button class="btn-app-primary" id="btnApplyManualAddress" style="padding: 0 16px;">Set</button>
+          </div>
+        </div>
+
+        <!-- Quick Presets -->
+        <div class="app-field-label" style="margin-top: 16px;">Saved Neighborhood Addresses</div>
+        <div class="address-presets-list">
+          <button class="address-preset-item active" data-lat="43.4475" data-lng="-79.6677" data-addr="85 King Ave, Oakville, ON">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <div>
+              <strong>85 King Ave, Oakville (Primary Home)</strong>
+              <span>QEW / Lake Ontario Corridor</span>
+            </div>
+          </button>
+
+          <button class="address-preset-item" data-lat="43.5890" data-lng="-79.6441" data-addr="12 Pine St, Mississauga, ON">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+            <div>
+              <strong>12 Pine St, Mississauga</strong>
+              <span>Peel Municipal Service Area</span>
+            </div>
+          </button>
+
+          <button class="address-preset-item" data-lat="43.6426" data-lng="-79.3871" data-addr="123 Example St, Toronto, ON">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+            <div>
+              <strong>123 Example St, Toronto</strong>
+              <span>Toronto West Corridor</span>
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 2: REALTIME SERVICE CHECKOUT & PAYMENT CONFIGURATOR       -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalSandboxCheckout" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title" id="checkoutPlanTitle">Configure Service Subscription</h3>
+        <button class="btn-sheet-close" id="btnCloseCheckoutModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <div class="sandbox-info-callout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <div>
+            <strong>Interactive Realtime Booking Engine</strong><br>
+            Instantly syncs dispatch orders to technician Marcus Chen (Van #4) and Operations HQ.
+          </div>
+        </div>
+
+        <!-- Frequency Selector -->
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label">Service Frequency & Cadence</label>
+          <div class="cadence-selector-grid">
+            <button type="button" class="cadence-chip active" data-freq="Weekly Routine (Curbside Municipal Cadence)">
+              <strong>Weekly</strong>
+              <span>Municipal Routine</span>
+            </button>
+            <button type="button" class="cadence-chip" data-freq="Bi-Weekly (Every 2 Weeks)">
+              <strong>Bi-Weekly</strong>
+              <span>Every 2 Weeks</span>
+            </button>
+            <button type="button" class="cadence-chip" data-freq="Monthly Essential">
+              <strong>Monthly</strong>
+              <span>Essential Refill</span>
+            </button>
+            <button type="button" class="cadence-chip" data-freq="One-Time Service">
+              <strong>One-Time</strong>
+              <span>Single Dispatch</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label" for="inputCheckoutAddressField">Service Property Address</label>
+          <input type="text" id="inputCheckoutAddressField" class="app-input-clean" value="85 King Ave, Oakville, ON L6J 1X2">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+          <div>
+            <label class="app-field-label" for="inputServiceStartDate">First Service Date</label>
+            <input type="date" id="inputServiceStartDate" class="app-input-clean">
+          </div>
+          <div>
+            <label class="app-field-label" for="inputGateAccessCheckout">Gate / Keypad Code</label>
+            <input type="text" id="inputGateAccessCheckout" class="app-input-clean" placeholder="e.g. #4491 or Side Gate">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label">Preferred Dispatch Window</label>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="arrival-chip active" data-window="Morning 8:00 AM – 12:00 PM">Morning (8 AM &ndash; 12 PM)</button>
+            <button type="button" class="arrival-chip" data-window="Afternoon 1:00 PM – 5:00 PM">Afternoon (1 PM &ndash; 5 PM)</button>
+          </div>
+        </div>
+
+        <!-- Payment Card Input (Interactive Simulator) -->
+        <div style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+            <label class="app-field-label" style="margin-bottom: 0;">Payment Method</label>
+            <button type="button" class="btn-link-action" id="btnFillDemoCard" style="margin-top: 0; font-size: 0.72rem;">Autofill Test Visa Card</button>
+          </div>
+          <div class="card-input-simulator-box">
+            <div style="margin-bottom: 8px;">
+              <input type="text" id="inputCardNumber" class="app-input-clean font-mono-tag" placeholder="4242 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242" maxlength="19">
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px;">
+              <input type="text" id="inputCardHolder" class="app-input-clean" placeholder="Cardholder Name" value="Alexandre Tremblay">
+              <input type="text" id="inputCardExpiry" class="app-input-clean font-mono-tag" placeholder="MM/YY" maxlength="5">
+              <input type="password" id="inputCardCvc" class="app-input-clean font-mono-tag" placeholder="CVC" maxlength="3">
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-summary-box">
+          <div class="summary-line">
+            <span id="checkoutPlanNameLabel">Everyday Duo (2 Services)</span>
+            <span id="checkoutPriceLabel">$89.00 / mo</span>
+          </div>
+          <div class="summary-line">
+            <span>Harmonized Sales Tax (HST 13%)</span>
+            <span id="checkoutHstLabel">$11.57</span>
+          </div>
+          <div class="summary-line total-bold">
+            <span>Total Monthly Charge</span>
+            <span id="checkoutTotalLabel" style="color: var(--emerald-primary);">$100.57 CAD</span>
+          </div>
+        </div>
+
+        <button class="btn-app-primary" id="btnConfirmSandboxBooking" style="width: 100%;">
+          <span>Confirm & Activate Subscription</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 3: DRIVER PROOF OF SERVICE CAPTURE                       -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalDriverProof" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title" id="driverProofStopTitle">Complete Stop #2</h3>
+        <button class="btn-sheet-close" id="btnCloseDriverProofModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <div class="geofence-alert-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>GPS Geofence Verified &bull; Delta 4.8m from customer property</span>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label">1. Completed Service Photo</label>
+          <div class="proof-photo-box">
+            <img id="driverProofPhotoImg" src="assets/salt_refill.jpg" alt="Proof photo">
+            <span class="proof-badge-floating">Driver Terminal Camera</span>
+          </div>
+          <button type="button" class="btn-link-action" id="btnSimulateNewAngle">Simulate Alternate Angle</button>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label">2. Customer Vector Signature Sign-Off</label>
+          <div class="canvas-signature-wrap">
+            <canvas id="driverSignaturePad" width="460" height="140"></canvas>
+            <span class="canvas-hint" id="driverSigHint">Sign with finger or stylus here</span>
+          </div>
+          <button type="button" class="btn-link-action" id="btnClearDriverSig">Clear Signature</button>
+        </div>
+
+        <button class="btn-app-primary" id="btnSubmitDriverProofVerified" style="width: 100%;">
+          <span>Submit Verified Proof & Complete Stop</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 4: PROOF INSPECTION CARD (VAULT)                         -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalProofInspect" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title" id="inspectProofServiceTitle">Verified Proof Record</h3>
+        <button class="btn-sheet-close" id="btnCloseInspectModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <div class="inspect-full-photo">
+          <img id="inspectProofPhotoImg" src="assets/salt_refill.jpg" alt="Proof record">
+        </div>
+
+        <div class="audit-data-grid">
+          <div class="audit-cell">
+            <span class="audit-cell-lbl">Technician</span>
+            <span class="audit-cell-val" id="inspectTechVal">Marcus Chen (Van #4)</span>
+          </div>
+          <div class="audit-cell">
+            <span class="audit-cell-lbl">GPS Geofence</span>
+            <span class="audit-cell-val" style="color: var(--emerald-primary);">Verified &le; 5.8m</span>
+          </div>
+          <div class="audit-cell">
+            <span class="audit-cell-lbl">Digital Sign-off</span>
+            <span class="audit-cell-val">Vector Signature Archived</span>
+          </div>
+        </div>
+
+        <button class="btn-app-secondary" id="btnDownloadServiceCertificate" style="width: 100%; margin-top: 16px;">
+          View & Print Official Audit Certificate
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 5: IN-APP VOIP REALTIME TECHNICIAN VOICE CALL             -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalVoiceCall" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet" style="max-width: 420px; text-align: center;">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header" style="justify-content: flex-end; border-bottom: none; padding-bottom: 0;">
+        <button class="btn-sheet-close" id="btnCloseCallModal" aria-label="Close call">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content" style="padding-top: 8px;">
+        <div class="call-avatar-wrap">
+          <div class="call-pulse-circle"></div>
+          <div class="call-avatar-circle">MC</div>
+        </div>
+
+        <h3 class="call-party-name">Marcus Chen</h3>
+        <p class="call-vehicle-sub">Van #4 (CVBA 842) &bull; Everyday Route</p>
+        
+        <div class="call-status-badge" id="callStatusIndicator">
+          <span class="live-pulse-dot"></span>
+          <span id="callStatusText">Connecting direct line...</span>
+        </div>
+
+        <div class="call-waveform-row" id="callWaveformRow" style="display: none;">
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+        </div>
+
+        <div class="call-controls-grid">
+          <button type="button" class="btn-call-circle" id="btnCallMute" title="Mute Microphone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            <span class="call-btn-lbl">Mute</span>
+          </button>
+          <button type="button" class="btn-call-circle" id="btnCallSpeaker" title="Speakerphone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <span class="call-btn-lbl">Speaker</span>
+          </button>
+          <button type="button" class="btn-call-circle btn-call-hangup" id="btnEndVoiceCall" title="End Call">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg>
+            <span class="call-btn-lbl">End</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 6: PROPERTY ENTRY & GATE INSTRUCTIONS                     -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalEntryNotes" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet" style="max-width: 480px;">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title">Entry & Gate Instructions</h3>
+        <button class="btn-sheet-close" id="btnCloseEntryNotesModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 16px;">
+          These instructions are immediately broadcast to technician Marcus Chen's mobile field terminal for Stop #2.
+        </p>
+
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label" for="inputGateCodeField">Gate Keypad / Lockbox Code</label>
+          <input type="text" id="inputGateCodeField" class="app-input-clean font-mono-tag" value="#4491" placeholder="e.g. #4491 or None">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="app-field-label" for="inputDetailedEntryNotes">Detailed Access Instructions</label>
+          <textarea id="inputDetailedEntryNotes" class="app-input-clean" rows="3" placeholder="Describe side gate latch, garage entry, or bin location...">Side gate latch is unlocked. Return blue bin to garage wall.</textarea>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; cursor: pointer;">
+            <input type="checkbox" id="chkPetWarning" checked style="accent-color: #059669; width: 16px; height: 16px;">
+            <span>Pet Alert: Golden Retriever in fenced yard (Friendly, keep gate latched)</span>
+          </label>
+        </div>
+
+        <button class="btn-app-primary" id="btnSaveEntryNotesToDriver" style="width: 100%;">
+          <span>Save & Sync to Technician Route</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 7: PRINTABLE OFFICIAL PROOF OF SERVICE CERTIFICATE        -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalOfficialCertificate" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet" style="max-width: 620px;">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title">Official Proof of Service Certificate</h3>
+        <button class="btn-sheet-close" id="btnCloseCertModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <div class="cert-printable-container" id="printableCertArea">
+          <div class="cert-header-bar">
+            <div>
+              <div class="cert-org-name">EVERYDAY HOME SERVICES INC.</div>
+              <div class="cert-sub-id" id="certDocumentId">AUDIT CERTIFICATE: CERT-2026-9041</div>
+            </div>
+            <div class="cert-seal-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>CRYPTOGRAPHICALLY VERIFIED</span>
+            </div>
+          </div>
+
+          <div class="cert-grid-details">
+            <div class="cert-cell">
+              <span class="cert-lbl">CUSTOMER PROPERTY</span>
+              <strong id="certCustomerProperty">85 King Ave, Oakville, ON L6J 1X2</strong>
+            </div>
+            <div class="cert-cell">
+              <span class="cert-lbl">SERVICE EXECUTED</span>
+              <strong id="certServiceType">Water Softener Salt Delivery</strong>
+            </div>
+            <div class="cert-cell">
+              <span class="cert-lbl">CERTIFIED CONTRACTOR</span>
+              <span id="certContractorName">Marcus Chen &bull; Van #4 (CVBA 842)</span>
+            </div>
+            <div class="cert-cell">
+              <span class="cert-lbl">GPS SATELLITE FIX</span>
+              <span style="color: var(--emerald-primary);" id="certGpsFix">Verified &le; 4.8m (Lake Ontario Geofence)</span>
+            </div>
+          </div>
+
+          <div class="cert-visuals-row">
+            <div class="cert-visual-col">
+              <span class="cert-lbl">TERMINAL PHOTO RECORD</span>
+              <div class="cert-img-box">
+                <img id="certPhotoRecord" src="assets/salt_refill.jpg" alt="Service photo record">
+              </div>
+            </div>
+            <div class="cert-visual-col">
+              <span class="cert-lbl">CUSTOMER DIGITAL SIGNATURE</span>
+              <div class="cert-sig-box" id="certSignatureDisplay">
+                <canvas id="certSignatureCanvas" width="220" height="90"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-footer-disclaimer">
+            This digital certificate confirms that certified technician Marcus Chen completed the service in full compliance with municipal bylaws and Everyday Platform Standards.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 18px;">
+          <button class="btn-app-secondary" id="btnPrintOfficialCert" style="flex: 1;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Print / Save PDF</span>
+          </button>
+          <button class="btn-app-primary" id="btnCertShareLink" style="flex: 1;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Copy Audit Link</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 8: REALTIME AUTHENTICATION & DEMO ACCOUNTS                -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalAuthLogin" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet" style="max-width: 480px;">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title" id="authModalHeaderTitle">Sign In to Everyday</h3>
+        <button class="btn-sheet-close" id="btnCloseAuthModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <!-- 1-Click Prototype Demo Accounts -->
+        <div class="auth-demo-accounts-callout">
+          <span class="app-field-label" style="margin-bottom: 6px;">1-Click Pre-Configured Test Accounts</span>
+          <div class="demo-accounts-pill-grid">
+            <button type="button" class="btn-demo-account-pill" data-demo-role="customer">
+              <span class="demo-acc-avatar">AT</span>
+              <div class="demo-acc-text">
+                <strong>Customer (Homeowner)</strong>
+                <span>alexandre@everydayhelp.com</span>
+              </div>
+            </button>
+
+            <button type="button" class="btn-demo-account-pill" data-demo-role="partner_approved">
+              <span class="demo-acc-avatar" style="background: var(--emerald-primary);">MC</span>
+              <div class="demo-acc-text">
+                <strong>Partner Driver (Van #4)</strong>
+                <span>marcus@everydayhelp.com</span>
+              </div>
+            </button>
+
+            <button type="button" class="btn-demo-account-pill" data-demo-role="admin">
+              <span class="demo-acc-avatar" style="background: #2563eb;">HQ</span>
+              <div class="demo-acc-text">
+                <strong>Operations HQ Lead</strong>
+                <span>ops@everydayhelp.com</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Segmented Auth Tab -->
+        <div class="auth-tabs-toggle">
+          <button type="button" class="auth-toggle-btn active" id="tabBtnSignIn">Sign In</button>
+          <button type="button" class="auth-toggle-btn" id="tabBtnSignUp">Create Account</button>
+        </div>
+
+        <!-- Form: Sign In -->
+        <form id="formSignInAuth" style="margin-top: 16px;" onsubmit="return false;">
+          <div style="margin-bottom: 12px;">
+            <label class="app-field-label" for="inputAuthEmail">Email Address</label>
+            <input type="email" id="inputAuthEmail" class="app-input-clean" placeholder="name@domain.com" value="alexandre@everydayhelp.com" required>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label class="app-field-label" for="inputAuthPassword">Password</label>
+            <input type="password" id="inputAuthPassword" class="app-input-clean" placeholder="••••••••" value="customer123" required>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; font-size: 0.78rem;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" id="chkRememberMe" checked style="accent-color: #059669;">
+              <span>Stay signed in</span>
+            </label>
+            <button type="button" class="btn-link-action" id="btnForgotPass" style="margin-top: 0;">Forgot Password?</button>
+          </div>
+
+          <button type="submit" class="btn-app-primary" id="btnSubmitSignIn" style="width: 100%;">
+            <span>Sign In to Account</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </form>
+
+        <!-- Form: Sign Up (Initially Hidden) -->
+        <form id="formSignUpAuth" style="margin-top: 16px; display: none;" onsubmit="return false;">
+          <div style="margin-bottom: 12px;">
+            <label class="app-field-label" for="inputSignUpName">Full Name</label>
+            <input type="text" id="inputSignUpName" class="app-input-clean" placeholder="e.g. Sarah Jenkins" required>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <label class="app-field-label" for="inputSignUpEmail">Email Address</label>
+            <input type="email" id="inputSignUpEmail" class="app-input-clean" placeholder="sarah@domain.com" required>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <label class="app-field-label" for="inputSignUpRole">Account Type</label>
+            <select id="inputSignUpRole" class="app-input-clean" style="background: #ffffff;">
+              <option value="customer">Homeowner (Book Services & GPS Radar)</option>
+              <option value="partner_pending">Service Partner Driver Applicant</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 18px;">
+            <label class="app-field-label" for="inputSignUpPassword">Create Password</label>
+            <input type="password" id="inputSignUpPassword" class="app-input-clean" placeholder="Minimum 6 characters" required>
+          </div>
+
+          <button type="submit" class="btn-app-primary" id="btnSubmitSignUp" style="width: 100%;">
+            <span>Create Account & Enter Platform</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- MODAL / SHEET 9: UPGRADED ACCOUNT & PROFILE MENU                       -->
+  <!-- ====================================================================== -->
+  <div class="app-modal-layer" id="modalAccountMenu" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card-bottom-sheet" style="max-width: 440px;">
+      <div class="modal-sheet-grabber"></div>
+      <div class="modal-sheet-header">
+        <h3 class="modal-sheet-title">My Account & Portal</h3>
+        <button class="btn-sheet-close" id="btnCloseAccountModal" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-sheet-content">
+        <div class="account-profile-card">
+          <div class="account-avatar-circle" id="accAvatarLarge">AT</div>
+          <div>
+            <div class="account-user-name" id="accUserName">Alexandre Tremblay</div>
+            <div class="account-user-role" id="accUserRole">Homeowner Account</div>
+            <div class="account-user-email" id="accUserEmail">alexandre@everydayhelp.com</div>
+          </div>
+        </div>
+
+        <div class="app-field-label" style="margin-top: 18px;">Switch Role Portal</div>
+        <div class="portal-switch-list">
+          <button class="portal-switch-item active" data-switch-role="customer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <div>
+              <strong>Customer App (Homeowner)</strong>
+              <span>Live map, on-demand utility booking & radar</span>
+            </div>
+          </button>
+
+          <button class="portal-switch-item" data-switch-role="partner_approved">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <div>
+              <strong>Driver Field Terminal (Marcus Chen)</strong>
+              <span>10-stop sequenced route, maps nav & proof capture</span>
+            </div>
+          </button>
+
+          <button class="portal-switch-item" data-switch-role="partner_pending">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div>
+              <strong>Driver Onboarding (David Miller)</strong>
+              <span>Vehicle, Checkr background audit & compliance</span>
+            </div>
+          </button>
+
+          <button class="portal-switch-item" data-switch-role="admin">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <div>
+              <strong>Operations HQ & Logistics Cockpit</strong>
+              <span>Fleet KPIs, 1-click approvals & webhook stream</span>
+            </div>
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 18px;">
+          <button class="btn-app-secondary" id="btnOpenAuthModalFromMenu" style="flex: 1;">
+            Sign In / Switch
+          </button>
+          <button class="btn-app-secondary" id="btnResetPlatformState" style="color: #64748b;" title="Reset test data to initial prototype state">
+            Reset Data
+          </button>
+        </div>
+
+        <button class="btn-app-secondary" id="btnSignOutFromModal" style="width: 100%; margin-top: 10px; color: #dc2626; border-color: #fecaca;">
+          Sign Out of Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div class="toast-stack-wrap" id="toastStackWrap" aria-live="polite"></div>
+
+  <!-- APPLICATION CODE -->
+  <script src="app.js"></script>
+</body>
+</html>

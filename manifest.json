@@ -1,0 +1,32 @@
+{
+  "name": "Everyday Home Services",
+  "short_name": "Everyday",
+  "description": "On-demand and subscription recurring home utility services with verified realtime proof of service.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/app-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "utilities", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Live Tracking",
+      "url": "./index.html#track",
+      "description": "Track your technician in real time"
+    },
+    {
+      "name": "Book Services",
+      "url": "./index.html#services",
+      "description": "Browse and book home services"
+    }
+  ]
+}
