@@ -321,7 +321,7 @@
 
     // Rehydrate active persona and order tracker state
     switchPersonaRole(STATE.currentUser.role || 'customer');
-    activateCustomerTab('map');
+    activateCustomerTab('home');
     if (STATE.currentUser.activeOrder) {
       const trackerCard = document.getElementById('activeJobTrackerCard');
       if (trackerCard) trackerCard.style.display = 'block';
@@ -1702,7 +1702,7 @@
   function setupMobileTabbar() {
     const tabMap = {
       home: 'tabViewHome',
-      services: 'tabViewServices',
+      services: 'tabViewHome',
       map: 'tabViewMap',
       vault: 'tabViewVault',
       account: 'tabViewAccount'
@@ -1809,7 +1809,7 @@
 
     // Floating pill on map: "Browse All Services"
     document.getElementById('btnMapQuickBrowse')?.addEventListener('click', () => {
-      activateCustomerTab('services');
+      activateCustomerTab('home');
     });
 
     // Topbar brand logo click navigates to Home

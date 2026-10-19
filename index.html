@@ -109,7 +109,7 @@
       <!-- ================================================================== -->
       <!-- TAB SCREEN 0: HOME / EXPLORE & INSTANT BOOK (CONTEXTUAL STOREFRONT)-->
       <!-- ================================================================== -->
-      <section class="customer-tab-screen" id="tabViewHome" aria-label="Home and Instant Booking">
+      <section class="customer-tab-screen active" id="tabViewHome" aria-label="Home and Instant Booking">
         <div class="tab-screen-container">
 
           <!-- Sleek Dynamic Island Style Active Job Capsule -->
@@ -327,7 +327,7 @@
       <!-- ================================================================== -->
       <!-- TAB SCREEN 1: MAP & REALTIME DISPATCH TRACKER                      -->
       <!-- ================================================================== -->
-      <section class="customer-tab-screen active" id="tabViewMap" aria-label="Live map and tracking">
+      <section class="customer-tab-screen" id="tabViewMap" aria-label="Live map and tracking">
         
         <!-- Full-bleed Leaflet Map Canvas -->
         <div class="app-map-canvas-container" id="appMapCanvasContainer">
@@ -374,88 +374,16 @@
               </div>
             </div>
 
-            <!-- Uber Ride Options / Chores Picker -->
-            <div class="uber-services-picker">
-              <div class="sheet-title-row">
-                <span class="sheet-subtitle">AVAILABLE NEIGHBORHOOD CHORES</span>
-                <span class="sheet-neighborhood">Oakville &bull; Van #4 Active</span>
+            <!-- Live Status & Quick Action -->
+            <div class="map-sheet-quick-actions">
+              <div class="map-sheet-patrol-info">
+                <span class="live-pulse-dot"></span>
+                <span>Active Oakville Corridor &bull; Van #4</span>
               </div>
-
-              <div class="uber-service-options">
-                
-                <!-- 1. Bins -->
-                <div class="uber-service-row" data-open-book="bin" role="button" tabindex="0">
-                  <div class="service-icon-box box-bin">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                  </div>
-                  <div class="service-details">
-                    <div class="service-name-row">
-                      <span class="service-title">Curbside Bins</span>
-                      <span class="service-price">$49<small>/mo</small></span>
-                    </div>
-                    <div class="service-desc-row">
-                      <span>Weekly placement & garage return</span>
-                      <span class="service-cadence">Every Mon</span>
-                    </div>
-                  </div>
-                  <button class="btn-uber-book" data-open-book="bin" type="button">Book</button>
-                </div>
-
-                <!-- 2. Salt -->
-                <div class="uber-service-row" data-open-book="salt" role="button" tabindex="0">
-                  <div class="service-icon-box box-salt">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
-                  </div>
-                  <div class="service-details">
-                    <div class="service-name-row">
-                      <span class="service-title">Water Softener Salt</span>
-                      <span class="service-price">$89<small>/mo</small></span>
-                    </div>
-                    <div class="service-desc-row">
-                      <span>2x 20kg bags filled into brine tank</span>
-                      <span class="service-cadence">Monthly</span>
-                    </div>
-                  </div>
-                  <button class="btn-uber-book" data-open-book="salt" type="button">Book</button>
-                </div>
-
-                <!-- 3. Bulbs -->
-                <div class="uber-service-row" data-open-book="bulb" role="button" tabindex="0">
-                  <div class="service-icon-box box-bulb">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
-                  </div>
-                  <div class="service-details">
-                    <div class="service-name-row">
-                      <span class="service-title">High-Ceiling Bulbs</span>
-                      <span class="service-price">$39<small>/visit</small></span>
-                    </div>
-                    <div class="service-desc-row">
-                      <span>Foyer & coach lamps with 12ft ladder</span>
-                      <span class="service-cadence">On-Demand</span>
-                    </div>
-                  </div>
-                  <button class="btn-uber-book" data-open-book="bulb" type="button">Book</button>
-                </div>
-
-                <!-- 4. Junk Haul -->
-                <div class="uber-service-row" data-open-book="junk" role="button" tabindex="0">
-                  <div class="service-icon-box box-junk">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                  </div>
-                  <div class="service-details">
-                    <div class="service-name-row">
-                      <span class="service-title">Eco Box & Junk Haul</span>
-                      <span class="service-price">$69<small>/load</small></span>
-                    </div>
-                    <div class="service-desc-row">
-                      <span>Amazon boxes & garage declutter</span>
-                      <span class="service-cadence">Same-Week</span>
-                    </div>
-                  </div>
-                  <button class="btn-uber-book" data-open-book="junk" type="button">Book</button>
-                </div>
-
-              </div>
+              <button class="btn-map-explore-services" id="btnMapQuickBrowse" type="button">
+                <span>Browse All Services</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
             </div>
           </div>
 
@@ -463,176 +391,7 @@
       </section>
 
       <!-- ================================================================== -->
-      <!-- TAB SCREEN 2: SERVICES & PLANS (DEDICATED FULLSCREEN STORE)        -->
-      <!-- ================================================================== -->
-      <section class="customer-tab-screen" id="tabViewServices" aria-label="Services Catalog">
-        <div class="tab-screen-container">
-          
-          <!-- Category Quick Filter Bar -->
-          <div class="catalog-filters-bar">
-            <button class="catalog-filter-chip active" data-filter="all">All Services</button>
-            <button class="catalog-filter-chip" data-filter="curbside">Curbside Bins ($49)</button>
-            <button class="catalog-filter-chip" data-filter="salt">Salt Refills ($89)</button>
-            <button class="catalog-filter-chip" data-filter="bulb">Bulb Replacement</button>
-            <button class="catalog-filter-chip" data-filter="junk">Junk Haul Away</button>
-          </div>
-
-          <!-- Section: 4 Core Services -->
-          <div class="tab-section-header">
-            <div>
-              <h2 class="tab-section-title">On-Demand & Recurring Services</h2>
-              <p class="tab-section-sub">Scheduled routine chores completed by verified neighborhood technicians.</p>
-            </div>
-          </div>
-
-          <div class="service-app-cards-list">
-            
-            <!-- Service 1: Bin Take-Out -->
-            <div class="app-service-card" data-service-key="bin" tabindex="0">
-              <div class="app-card-thumb">
-                <img src="assets/bin_takeout.jpg" alt="Bin Take-Out" loading="lazy">
-              </div>
-              <div class="app-card-info">
-                <div class="app-card-topline">
-                  <h3 class="app-card-title">Bin Take-Out & Return</h3>
-                  <span class="app-card-price">$49 / mo</span>
-                </div>
-                <p class="app-card-sub">Curbside municipal placement & garage return</p>
-                <div class="app-card-bottom-row">
-                  <span class="app-card-badge">Weekly Routine &bull; Photo Proof</span>
-                  <button class="btn-card-book" data-open-book="bin">Book Service</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Service 2: Salt Refill -->
-            <div class="app-service-card" data-service-key="salt" tabindex="0">
-              <div class="app-card-thumb">
-                <img src="assets/salt_refill.jpg" alt="Water Softener Salt" loading="lazy">
-              </div>
-              <div class="app-card-info">
-                <div class="app-card-topline">
-                  <h3 class="app-card-title">Water Softener Salt Delivery</h3>
-                  <span class="app-card-price">$89 / mo</span>
-                </div>
-                <p class="app-card-sub">2x 20kg bags delivered to basement & brine tank filled</p>
-                <div class="app-card-bottom-row">
-                  <span class="app-card-badge">Monthly Essential &bull; Signature Sign-off</span>
-                  <button class="btn-card-book" data-open-book="salt">Book Service</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Service 3: Bulb Change -->
-            <div class="app-service-card" data-service-key="bulb" tabindex="0">
-              <div class="app-card-thumb">
-                <img src="assets/bulb_change.jpg" alt="Bulb Replacement" loading="lazy">
-              </div>
-              <div class="app-card-info">
-                <div class="app-card-topline">
-                  <h3 class="app-card-title">Bulb Replacement & High Reach</h3>
-                  <span class="app-card-price">Included in Duo</span>
-                </div>
-                <p class="app-card-sub">Foyer ceiling chandeliers, exterior coach lanterns & ladders</p>
-                <div class="app-card-bottom-row">
-                  <span class="app-card-badge">Safety & Ladders &bull; 12ft Reach</span>
-                  <button class="btn-card-book" data-open-book="bulb">Book Service</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Service 4: Junk Pickup -->
-            <div class="app-service-card" data-service-key="junk" tabindex="0">
-              <div class="app-card-thumb">
-                <img src="assets/junk_pickup.jpg" alt="Curbside Junk Hauling" loading="lazy">
-              </div>
-              <div class="app-card-info">
-                <div class="app-card-topline">
-                  <h3 class="app-card-title">Curbside Junk & Box Hauling</h3>
-                  <span class="app-card-price">Included in Duo</span>
-                </div>
-                <p class="app-card-sub">Flattened moving cartons & household clutter removal</p>
-                <div class="app-card-bottom-row">
-                  <span class="app-card-badge">Eco Hauling &bull; Responsible Recycle</span>
-                  <button class="btn-card-book" data-open-book="junk">Book Service</button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- SECTION: SUBSCRIPTION TIERS (Single vs Duo vs Elite) -->
-          <div class="tab-section-header" style="margin-top: 32px;">
-            <div>
-              <h2 class="tab-section-title">Subscription Bundles</h2>
-              <p class="tab-section-sub">Bundle essential utility services for maximum monthly savings.</p>
-            </div>
-          </div>
-
-          <div class="subscription-compact-tiers">
-            <div class="bundle-pill-card popular" data-plan-key="basic_plus">
-              <div class="bundle-badge-popular">MOST POPULAR BUNDLE</div>
-              <div class="bundle-header-row">
-                <div class="bundle-title-col">
-                  <strong class="bundle-title">Everyday Duo &bull; 2 Services</strong>
-                  <span class="bundle-tagline">Save 35% on essential recurring utility chores</span>
-                </div>
-                <div class="bundle-price-col">
-                  <span class="bundle-price-val">$89</span>
-                  <span class="bundle-price-freq">/ mo</span>
-                </div>
-              </div>
-              <div class="bundle-features-grid">
-                <div class="bundle-feat-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Weekly bin take-out & garage return</span>
-                </div>
-                <div class="bundle-feat-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Monthly 2x 20kg salt delivered & filled</span>
-                </div>
-                <div class="bundle-feat-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Audited photo proof & GPS geofence stamp</span>
-                </div>
-              </div>
-              <button class="btn-bundle-select" data-open-book="salt">Select Everyday Duo</button>
-            </div>
-
-            <div class="bundle-pill-card" data-plan-key="premium">
-              <div class="bundle-header-row">
-                <div class="bundle-title-col">
-                  <strong class="bundle-title">Whole Home Elite &bull; All 4 Services</strong>
-                  <span class="bundle-tagline">Complete utility maintenance for hands-off homeowners</span>
-                </div>
-                <div class="bundle-price-col">
-                  <span class="bundle-price-val">$149</span>
-                  <span class="bundle-price-freq">/ mo</span>
-                </div>
-              </div>
-              <div class="bundle-features-grid">
-                <div class="bundle-feat-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Curbside bins + 2x salt bags refill</span>
-                </div>
-                <div class="bundle-feat-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>High ceiling & exterior coach bulb replacement</span>
-                </div>
-                <div class="bundle-feat-item">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Monthly curbside box & clutter haul away</span>
-                </div>
-              </div>
-              <button class="btn-bundle-select" data-open-book="premium">Select Whole Home Elite</button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ================================================================== -->
-      <!-- TAB SCREEN 3: VERIFIED PROOF VAULT (DEDICATED FULLSCREEN AUDIT)    -->
+      <!-- TAB SCREEN 2: VERIFIED PROOF VAULT (DEDICATED FULLSCREEN AUDIT)    -->
       <!-- ================================================================== -->
       <section class="customer-tab-screen" id="tabViewVault" aria-label="Past Service Proof Vault">
         <div class="tab-screen-container">
@@ -660,65 +419,130 @@
         <div class="tab-screen-container" style="max-width: 640px;">
           <div class="tab-section-header">
             <div>
-              <h2 class="tab-section-title">My Account & Portal Settings</h2>
-              <p class="tab-section-sub">Manage active addresses, billing frequency, and switch demonstration accounts.</p>
+              <h2 class="tab-section-title">My Account & Property</h2>
+              <p class="tab-section-sub">Profile, subscribed home routines, service addresses, and verified access.</p>
             </div>
           </div>
 
+          <!-- Profile Card -->
           <div class="account-profile-card">
             <div class="account-avatar-circle" id="tabAccAvatarLarge">AT</div>
             <div>
               <div class="account-user-name" id="tabAccUserName">Alexandre Tremblay</div>
-              <div class="account-user-role" id="tabAccUserRole">Homeowner Account</div>
+              <div class="account-user-role" id="tabAccUserRole">Verified Homeowner &bull; Active Member</div>
               <div class="account-user-email" id="tabAccUserEmail">alexandre@everydayhelp.com</div>
             </div>
           </div>
 
-          <div class="app-field-label" style="margin-top: 24px; margin-bottom: 8px;">Switch Role Portal</div>
-          <div class="portal-switch-list">
-            <button class="portal-switch-item active" data-switch-role="customer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-              <div>
-                <strong>Customer App (Homeowner)</strong>
-                <span>Live map, on-demand utility booking & radar</span>
-              </div>
-            </button>
-
-            <button class="portal-switch-item" data-switch-role="partner_approved">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-              <div>
-                <strong>Driver Field Terminal (Marcus Chen)</strong>
-                <span>10-stop sequenced route, maps nav & proof capture</span>
-              </div>
-            </button>
-
-            <button class="portal-switch-item" data-switch-role="partner_pending">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              <div>
-                <strong>Driver Onboarding (David Miller)</strong>
-                <span>Vehicle, Checkr background audit & compliance</span>
-              </div>
-            </button>
-
-            <button class="portal-switch-item" data-switch-role="admin">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-              <div>
-                <strong>Operations HQ & Logistics Cockpit</strong>
-                <span>Fleet KPIs, 1-click approvals & webhook stream</span>
-              </div>
-            </button>
+          <!-- Property & Access Card -->
+          <div class="account-card-section">
+            <div class="account-section-header">
+              <span class="account-section-heading">Service Address</span>
+              <span class="strip-eta" style="font-size: 0.68rem; padding: 2px 8px;">Primary Residence</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Property</span>
+              <span class="account-item-val">85 King Ave, Oakville, ON L6J 1R8</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Curbside Pickup</span>
+              <span class="account-item-val">Every Monday &bull; 7:00 AM &ndash; 11:00 AM</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Brine Tank Fill</span>
+              <span class="account-item-val">Basement Utility Access (Keypad Verified)</span>
+            </div>
           </div>
 
-          <div style="display: flex; gap: 10px; margin-top: 22px;">
-            <button class="btn-app-secondary" id="btnOpenAuthFromTab" style="flex: 1;">
-              Sign In / Switch Account
-            </button>
-            <button class="btn-app-secondary" id="btnResetStateFromTab" style="color: #64748b;" title="Reset test data to initial prototype state">
-              Reset Test Data
-            </button>
+          <!-- Active Subscription Card -->
+          <div class="account-card-section">
+            <div class="account-section-header">
+              <span class="account-section-heading">Active Recurring Routine</span>
+              <span class="badge-status-approved" style="font-size: 0.70rem; padding: 2px 8px;">Active &bull; Renews Nov 1</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Plan Tier</span>
+              <span class="account-item-val" style="color: #059669; font-weight: 700;">Everyday Duo ($89 / mo)</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Included Services</span>
+              <span class="account-item-val">Weekly Bins + Monthly 2x 20kg Salt Bags</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Payment Method</span>
+              <span class="account-item-val">Apple Pay &bull;&bull;&bull;&bull; 4242</span>
+            </div>
           </div>
 
-          <button class="btn-app-secondary" id="btnSignOutFromTab" style="width: 100%; margin-top: 12px; color: #dc2626; border-color: #fecaca;">
+          <!-- Preferences & Security Card -->
+          <div class="account-card-section">
+            <div class="account-section-header">
+              <span class="account-section-heading">Security & Notifications</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Live Radar SMS Alert</span>
+              <span class="account-item-val" style="color: #059669;">Enabled (15m before arrival)</span>
+            </div>
+            <div class="account-item-row">
+              <span class="account-item-label">Tamper-Proof Proof Vault</span>
+              <span class="account-item-val" style="color: #059669;">GPS & Photo Geofence Stamp</span>
+            </div>
+          </div>
+
+          <!-- Demo Role Switcher (Tucked into clean accordion for testing) -->
+          <details class="account-dev-disclosure" open>
+            <summary class="account-dev-summary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              <span>Demo Persona & Role Switcher</span>
+            </summary>
+            
+            <p style="font-size: 0.74rem; color: #64748b; margin: 10px 0 12px 0;">Switch views to test the driver field tablet or ops headquarters.</p>
+
+            <div class="portal-switch-list">
+              <button class="portal-switch-item active" data-switch-role="customer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                <div>
+                  <strong>Customer App (Homeowner)</strong>
+                  <span>Live map, on-demand utility booking & radar</span>
+                </div>
+              </button>
+
+              <button class="portal-switch-item" data-switch-role="partner_approved">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                <div>
+                  <strong>Driver Field Terminal (Marcus Chen)</strong>
+                  <span>10-stop sequenced route, maps nav & proof capture</span>
+                </div>
+              </button>
+
+              <button class="portal-switch-item" data-switch-role="partner_pending">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div>
+                  <strong>Driver Onboarding (David Miller)</strong>
+                  <span>Vehicle, Checkr background audit & compliance</span>
+                </div>
+              </button>
+
+              <button class="portal-switch-item" data-switch-role="admin">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <div>
+                  <strong>Operations HQ & Logistics Cockpit</strong>
+                  <span>Fleet KPIs, 1-click approvals & webhook stream</span>
+                </div>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 14px;">
+              <button class="btn-app-secondary" id="btnOpenAuthFromTab" style="flex: 1; font-size: 0.78rem;">
+                Sign In / Switch Account
+              </button>
+              <button class="btn-app-secondary" id="btnResetStateFromTab" style="color: #64748b; font-size: 0.78rem;" title="Reset test data to initial prototype state">
+                Reset Demo Data
+              </button>
+            </div>
+          </details>
+
+          <button class="btn-app-secondary" id="btnSignOutFromTab" style="width: 100%; margin-top: 14px; color: #dc2626; border-color: #fecaca; font-size: 0.82rem;">
             Sign Out of Account
           </button>
         </div>
