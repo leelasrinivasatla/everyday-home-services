@@ -321,7 +321,7 @@
 
     // Rehydrate active persona and order tracker state
     switchPersonaRole(STATE.currentUser.role || 'customer');
-    syncHomeActiveTracker();
+    activateCustomerTab('map');
     if (STATE.currentUser.activeOrder) {
       const trackerCard = document.getElementById('activeJobTrackerCard');
       if (trackerCard) trackerCard.style.display = 'block';
@@ -341,9 +341,11 @@
       attributionControl: false
     }).setView([STATE.currentLocation.lat, STATE.currentLocation.lng], 13);
 
-    // High quality OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19
+    // Tier-1 Native Map Tiles: CartoDB Voyager (Apple Maps / Uber aesthetic)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      subdomains: 'abcd',
+      attribution: false
     }).addTo(leafletMap);
 
     // Custom Customer Pin Icon (Clean Blue Circle with SVG Home)
@@ -377,6 +379,29 @@
     driverMarker = L.marker([STATE.driver.vanLat, STATE.driver.vanLng], { icon: driverIcon })
       .addTo(leafletMap)
       .bindPopup(`<strong>Technician En Route</strong><br>Marcus Chen &bull; Ford Transit Van`);
+
+    // Additional Active Neighborhood Fleet Vans (Uber Style)
+    const fleetVans = [
+      { id: 'van1', name: 'Dave Morales (Van #1)', task: 'Curbside Bins Route', lat: 43.4420, lng: -79.6620 },
+      { id: 'van2', name: 'Sarah Jenkins (Van #2)', task: 'High Bulb Service', lat: 43.4615, lng: -79.6910 }
+    ];
+
+    const fleetIcon = L.divIcon({
+      className: 'leaflet-fleet-pin',
+      html: `
+        <div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #0f172a; border: 2.5px solid #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.4); display: flex; align-items: center; justify-content: center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        </div>
+      `,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
+
+    fleetVans.forEach(v => {
+      L.marker([v.lat, v.lng], { icon: fleetIcon })
+        .addTo(leafletMap)
+        .bindPopup(`<strong>${v.name}</strong><br>${v.task}`);
+    });
 
     // Route Polyline connecting Van to Customer Home
     routePolyline = L.polyline([
@@ -1690,6 +1715,11 @@
         btn.classList.toggle('active', btn.getAttribute('data-tab-action') === tabName);
       });
 
+      // Synchronize desktop nav buttons
+      document.querySelectorAll('.desktop-nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-desktop-tab') === tabName);
+      });
+
       // Switch active screen
       document.querySelectorAll('.customer-tab-screen').forEach(screen => {
         screen.classList.remove('active');
@@ -1721,6 +1751,31 @@
       btn.addEventListener('click', () => {
         const act = btn.getAttribute('data-tab-action');
         activateCustomerTab(act);
+      });
+    });
+
+    document.querySelectorAll('.desktop-nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const act = btn.getAttribute('data-desktop-tab');
+        activateCustomerTab(act);
+      });
+    });
+
+    // Category filter chips handler
+    document.querySelectorAll('.catalog-filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const filter = chip.getAttribute('data-filter') || 'all';
+        document.querySelectorAll('.catalog-filter-chip').forEach(c => {
+          c.classList.toggle('active', c.getAttribute('data-filter') === filter);
+        });
+        document.querySelectorAll('.app-service-card').forEach(card => {
+          const key = card.getAttribute('data-service-key');
+          if (filter === 'all' || key === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
       });
     });
 

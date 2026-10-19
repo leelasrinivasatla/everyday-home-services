@@ -58,29 +58,30 @@
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </div>
 
-      <!-- Auto Detect GPS Button (1-Click) -->
-      <button class="btn-gps-autodetect" id="btnGpsAutodetect" title="Auto-detect current GPS location" aria-label="Auto detect location">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="22" y1="12" x2="18" y2="12"></line>
-          <line x1="6" y1="12" x2="2" y2="12"></line>
-          <line x1="12" y1="6" x2="12" y2="2"></line>
-          <line x1="12" y1="22" x2="12" y2="18"></line>
-        </svg>
-      </button>
+      <!-- Desktop Navigation Menu (Visible on Web Viewport > 860px) -->
+      <nav class="desktop-nav-links" id="desktopNavLinks" aria-label="Desktop primary navigation">
+        <button class="desktop-nav-btn active" data-desktop-tab="home" type="button">Home</button>
+        <button class="desktop-nav-btn" data-desktop-tab="services" type="button">Services</button>
+        <button class="desktop-nav-btn" data-desktop-tab="map" type="button">Live Radar</button>
+        <button class="desktop-nav-btn" data-desktop-tab="vault" type="button">Proof Vault</button>
+        <button class="desktop-nav-btn" data-desktop-tab="account" type="button">Account</button>
+      </nav>
 
-      <!-- Right Topbar Items: Live Beacon & User Avatar / Sign In -->
+      <!-- Right Topbar Items: Auto Detect GPS & User Avatar -->
       <div class="topbar-right">
-        
-        <div class="live-dispatch-badge" title="Active neighborhood route">
-          <span class="live-pulse-dot"></span>
-          <span>Live Radar</span>
-        </div>
+        <button class="btn-gps-autodetect" id="btnGpsAutodetect" title="Auto-detect current GPS location" aria-label="Auto detect location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="22" y1="12" x2="18" y2="12"></line>
+            <line x1="6" y1="12" x2="2" y2="12"></line>
+            <line x1="12" y1="6" x2="12" y2="2"></line>
+            <line x1="12" y1="22" x2="12" y2="18"></line>
+          </svg>
+        </button>
 
         <div class="user-avatar-trigger" id="userMenuBtn" role="button" tabindex="0" title="Account Menu">
           <span class="user-avatar-text" id="topbarAvatarText">AT</span>
         </div>
-
       </div>
 
     </div>
@@ -99,7 +100,7 @@
       <!-- ================================================================== -->
       <!-- TAB SCREEN 0: HOME / EXPLORE & INSTANT BOOK (CONTEXTUAL STOREFRONT)-->
       <!-- ================================================================== -->
-      <section class="customer-tab-screen active" id="tabViewHome" aria-label="Home and Instant Booking">
+      <section class="customer-tab-screen" id="tabViewHome" aria-label="Home and Instant Booking">
         <div class="tab-screen-container">
 
           <!-- Sleek Dynamic Island Style Active Job Capsule -->
@@ -128,58 +129,38 @@
             <input type="text" id="homeHeroSearchInput" placeholder="Search home chores (salt, bins, bulbs, haul)..." class="home-native-search-input">
           </div>
 
-          <!-- 4-Column Quick Action Hub (Native Mobile Squircle Grid) -->
-          <div class="home-category-hub">
-            <div class="hub-tile" data-open-book="bin" role="button" tabindex="0">
-              <div class="hub-icon-box hub-bin">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-              </div>
-              <span class="hub-title">Curbside Bins</span>
-              <span class="hub-price">$49/mo</span>
-            </div>
-
-            <div class="hub-tile" data-open-book="salt" role="button" tabindex="0">
-              <div class="hub-icon-box hub-salt">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
-              </div>
-              <span class="hub-title">Salt Refill</span>
-              <span class="hub-price">$89/mo</span>
-            </div>
-
-            <div class="hub-tile" data-open-book="bulb" role="button" tabindex="0">
-              <div class="hub-icon-box hub-bulb">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
-              </div>
-              <span class="hub-title">High Bulbs</span>
-              <span class="hub-price">$39/visit</span>
-            </div>
-
-            <div class="hub-tile" data-open-book="junk" role="button" tabindex="0">
-              <div class="hub-icon-box hub-junk">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-              </div>
-              <span class="hub-title">Junk Haul</span>
-              <span class="hub-price">$69/load</span>
-            </div>
+          <!-- Quick Category Filters (Clean Apple / Uber Style Chips) -->
+          <div class="catalog-filters-bar">
+            <button class="catalog-filter-chip active" data-filter="all">All Services</button>
+            <button class="catalog-filter-chip" data-filter="bin">Curbside Bins ($49)</button>
+            <button class="catalog-filter-chip" data-filter="salt">Salt Refill ($89)</button>
+            <button class="catalog-filter-chip" data-filter="bulb">Bulb Replacement ($39)</button>
+            <button class="catalog-filter-chip" data-filter="junk">Clutter Haul ($69)</button>
           </div>
 
           <!-- Featured Routine Card: Everyday Duo Plan -->
           <div class="home-membership-banner" data-open-book="salt" role="button" tabindex="0">
             <div class="membership-banner-header">
-              <div class="membership-pill">
-                <span>★</span>
-                <span>RECOMMENDED ROUTINE</span>
-              </div>
+              <span class="membership-pill">POPULAR ROUTINE BUNDLE</span>
               <span class="membership-save-badge">Save $19/mo</span>
             </div>
             <div class="membership-banner-content">
               <div class="membership-text-col">
-                <h3 class="membership-heading">Everyday Duo Routine Plan</h3>
-                <p class="membership-sub">Weekly bin take-out + monthly water softener salt delivered to basement & brine tank filled.</p>
+                <h3 class="membership-heading">Everyday Duo: Bins + Salt Delivery</h3>
+                <p class="membership-sub">Weekly municipal bin placement & monthly 2x 20kg salt bags delivered to your basement brine tank.</p>
                 <div class="membership-feature-tags">
-                  <span>✓ Guaranteed Monday Bins</span>
-                  <span>✓ 2x 20kg Salt Bags</span>
-                  <span>✓ Photo Verification</span>
+                  <span class="tag-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Guaranteed Monday Bins</span>
+                  </span>
+                  <span class="tag-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>2x 20kg Salt Bags</span>
+                  </span>
+                  <span class="tag-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Geofenced Photo Proof</span>
+                  </span>
                 </div>
               </div>
               <div class="membership-action-col">
@@ -337,82 +318,135 @@
       <!-- ================================================================== -->
       <!-- TAB SCREEN 1: MAP & REALTIME DISPATCH TRACKER                      -->
       <!-- ================================================================== -->
-      <section class="customer-tab-screen" id="tabViewMap" aria-label="Live map and tracking">
+      <section class="customer-tab-screen active" id="tabViewMap" aria-label="Live map and tracking">
         
-        <!-- Real Interactive Leaflet Map Canvas -->
+        <!-- Full-bleed Leaflet Map Canvas -->
         <div class="app-map-canvas-container" id="appMapCanvasContainer">
           
-          <!-- The Real Leaflet Map DIV -->
           <div id="realLeafletMap" class="real-leaflet-map-element" role="region" aria-label="Interactive service map"></div>
 
-          <!-- Floating Map Recenter Controls -->
+          <!-- Floating Recenter Controls -->
           <div class="map-floating-actions">
-            <button class="btn-map-control" id="btnRecenterHome" title="Center map on your address" aria-label="Center on property">
+            <button class="btn-map-control" id="btnRecenterHome" title="Center on your address" aria-label="Center on property">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b0f19" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
             </button>
-            <button class="btn-map-control" id="btnRecenterDriver" title="Center map on driver Marcus Chen" aria-label="Center on driver">
+            <button class="btn-map-control" id="btnRecenterDriver" title="Center on driver Marcus Chen" aria-label="Center on driver">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
             </button>
           </div>
 
-          <!-- Floating Map Shortcut: Browse Catalog Pill -->
-          <button class="map-floating-browse-pill" id="btnMapQuickBrowse" type="button">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Browse All Services</span>
-          </button>
+          <!-- UBER-GRADE FLOATING NATIVE BOTTOM SHEET -->
+          <div class="uber-native-bottom-sheet" id="uberNativeSheet">
+            <div class="sheet-drag-handle" id="uberSheetHandle"></div>
 
-          <!-- COMPACT FLOATING ACTIVE JOB TRACKER SHEET -->
-          <div class="active-job-tracker-card floating-map-card" id="activeJobTrackerCard">
-            <div class="job-tracker-header">
-              <div class="job-status-pill">
-                <span class="live-pulse-dot"></span>
-                <span>En Route &bull; Stop #2</span>
+            <!-- Active Driver Status Capsule (Uber Style) -->
+            <div class="uber-active-job-strip" id="activeJobTrackerCard">
+              <div class="strip-header">
+                <div class="strip-badge">
+                  <span class="live-pulse-dot"></span>
+                  <span>EN ROUTE &bull; STOP #2</span>
+                </div>
+                <span class="strip-eta" id="drawerEtaValue">6m away</span>
               </div>
-              <div class="job-eta-text" id="drawerEtaValue">6 mins away</div>
-            </div>
-
-            <div class="job-technician-row">
-              <div class="tech-avatar-circle">MC</div>
-              <div class="tech-details-col">
-                <div class="tech-fullname">Marcus Chen &bull; Van #4</div>
-                <div class="tech-vehicle-sub">2022 Ford Transit (CVBA 842) &bull; 4.98 Rating</div>
-                <div class="tech-job-title" id="drawerJobTitle">Water Softener Salt Refill</div>
-              </div>
-            </div>
-
-            <!-- Realtime Stepper -->
-            <div class="job-milestones-row">
-              <div class="milestones-track-rail">
-                <div class="milestones-track-progress"></div>
-              </div>
-              <div class="milestone-node done">
-                <span class="node-dot"></span>
-                <span class="node-lbl">Dispatched</span>
-              </div>
-              <div class="milestone-node active">
-                <span class="node-dot"></span>
-                <span class="node-lbl">En Route</span>
-              </div>
-              <div class="milestone-node">
-                <span class="node-dot"></span>
-                <span class="node-lbl">Arriving</span>
-              </div>
-              <div class="milestone-node">
-                <span class="node-dot"></span>
-                <span class="node-lbl">Proof Signed</span>
+              <div class="strip-body">
+                <div class="tech-avatar-circle">MC</div>
+                <div class="strip-tech-info">
+                  <div class="tech-name">Marcus Chen &bull; Van #4</div>
+                  <div class="tech-sub" id="drawerJobTitle">Water Softener Salt Refill</div>
+                </div>
+                <div class="strip-actions">
+                  <button class="btn-strip-action" id="btnCallTech" title="Call Marcus">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </button>
+                  <button class="btn-strip-action" id="btnInstructionsTech" title="Entry Note">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <!-- Technician Contact Buttons -->
-            <div class="job-actions-row">
-              <button class="btn-job-action" id="btnCallTech">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span>Call Technician</span>
-              </button>
-              <button class="btn-job-action" id="btnInstructionsTech">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span>Entry Note</span>
-              </button>
+            <!-- Uber Ride Options / Chores Picker -->
+            <div class="uber-services-picker">
+              <div class="sheet-title-row">
+                <span class="sheet-subtitle">AVAILABLE NEIGHBORHOOD CHORES</span>
+                <span class="sheet-neighborhood">Oakville &bull; Van #4 Active</span>
+              </div>
+
+              <div class="uber-service-options">
+                
+                <!-- 1. Bins -->
+                <div class="uber-service-row" data-open-book="bin" role="button" tabindex="0">
+                  <div class="service-icon-box box-bin">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                  </div>
+                  <div class="service-details">
+                    <div class="service-name-row">
+                      <span class="service-title">Curbside Bins</span>
+                      <span class="service-price">$49<small>/mo</small></span>
+                    </div>
+                    <div class="service-desc-row">
+                      <span>Weekly placement & garage return</span>
+                      <span class="service-cadence">Every Mon</span>
+                    </div>
+                  </div>
+                  <button class="btn-uber-book" data-open-book="bin" type="button">Book</button>
+                </div>
+
+                <!-- 2. Salt -->
+                <div class="uber-service-row" data-open-book="salt" role="button" tabindex="0">
+                  <div class="service-icon-box box-salt">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                  </div>
+                  <div class="service-details">
+                    <div class="service-name-row">
+                      <span class="service-title">Water Softener Salt</span>
+                      <span class="service-price">$89<small>/mo</small></span>
+                    </div>
+                    <div class="service-desc-row">
+                      <span>2x 20kg bags filled into brine tank</span>
+                      <span class="service-cadence">Monthly</span>
+                    </div>
+                  </div>
+                  <button class="btn-uber-book" data-open-book="salt" type="button">Book</button>
+                </div>
+
+                <!-- 3. Bulbs -->
+                <div class="uber-service-row" data-open-book="bulb" role="button" tabindex="0">
+                  <div class="service-icon-box box-bulb">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+                  </div>
+                  <div class="service-details">
+                    <div class="service-name-row">
+                      <span class="service-title">High-Ceiling Bulbs</span>
+                      <span class="service-price">$39<small>/visit</small></span>
+                    </div>
+                    <div class="service-desc-row">
+                      <span>Foyer & coach lamps with 12ft ladder</span>
+                      <span class="service-cadence">On-Demand</span>
+                    </div>
+                  </div>
+                  <button class="btn-uber-book" data-open-book="bulb" type="button">Book</button>
+                </div>
+
+                <!-- 4. Junk Haul -->
+                <div class="uber-service-row" data-open-book="junk" role="button" tabindex="0">
+                  <div class="service-icon-box box-junk">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                  </div>
+                  <div class="service-details">
+                    <div class="service-name-row">
+                      <span class="service-title">Eco Box & Junk Haul</span>
+                      <span class="service-price">$69<small>/load</small></span>
+                    </div>
+                    <div class="service-desc-row">
+                      <span>Amazon boxes & garage declutter</span>
+                      <span class="service-cadence">Same-Week</span>
+                    </div>
+                  </div>
+                  <button class="btn-uber-book" data-open-book="junk" type="button">Book</button>
+                </div>
+
+              </div>
             </div>
           </div>
 
@@ -912,21 +946,13 @@
   <!-- MOBILE BOTTOM NAVIGATION (NATIVE APP FEEL)                             -->
   <!-- ====================================================================== -->
   <nav class="mobile-native-tabbar" id="mobileNativeTabbar" aria-label="Mobile Navigation">
-    <button class="tab-item active" data-tab-action="home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-      <span>Home</span>
-    </button>
-    <button class="tab-item" data-tab-action="services">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-      <span>Services</span>
-    </button>
-    <button class="tab-item" data-tab-action="map">
+    <button class="tab-item active" data-tab-action="map">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-      <span>Track</span>
+      <span>Map & Chores</span>
     </button>
     <button class="tab-item" data-tab-action="vault">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-      <span>Vault</span>
+      <span>Proof Vault</span>
     </button>
     <button class="tab-item" data-tab-action="account">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
