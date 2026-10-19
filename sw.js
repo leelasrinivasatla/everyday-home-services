@@ -1,5 +1,5 @@
 // Everyday Home Services - PWA Service Worker
-const CACHE_NAME = 'everyday-cache-v3';
+const CACHE_NAME = 'everyday-cache-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

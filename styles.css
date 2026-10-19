@@ -76,24 +76,19 @@ html {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--bg-app);
+  background-color: #ffffff;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  position: fixed;
-  inset: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   width: 100%;
   height: 100%;
-  height: -webkit-fill-available;
+  height: 100dvh;
   margin: 0;
   padding: 0;
   overflow: hidden; /* Native App Shell */
   font-family: var(--font-sans);
-  background-color: var(--bg-app);
+  background-color: #ffffff;
   color: var(--text-primary);
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
@@ -119,19 +114,24 @@ input, select, textarea {
    ========================================================================== */
 
 .app-shell {
-  position: fixed;
-  inset: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   width: 100%;
   height: 100%;
-  height: -webkit-fill-available;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background-color: var(--bg-app);
+  position: relative;
+}
+
+.app-main-viewport {
+  flex: 1 1 0%;
+  min-height: 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-topbar {
@@ -1226,13 +1226,14 @@ input, select, textarea {
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  width: 100% !important;
-  height: calc(52px + env(safe-area-inset-bottom, 0px)) !important;
-  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  width: 100vw !important;
+  height: calc(54px + env(safe-area-inset-bottom, 0px)) !important;
+  padding-top: 4px !important;
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
   background: #ffffff !important;
   border-top: 1px solid var(--border-light) !important;
   box-sizing: border-box !important;
-  z-index: 950 !important;
+  z-index: 9999 !important;
 }
 
 @media (max-width: 860px) {
@@ -1247,24 +1248,24 @@ input, select, textarea {
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    width: 100% !important;
-    height: calc(52px + env(safe-area-inset-bottom, 0px)) !important;
-    padding-top: 2px !important;
-    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    width: 100vw !important;
+    height: calc(54px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-top: 4px !important;
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
+    padding-left: env(safe-area-inset-left, 0px) !important;
+    padding-right: env(safe-area-inset-right, 0px) !important;
     align-items: center !important;
-    background: rgba(255, 255, 255, 0.98) !important;
+    background: #ffffff !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.04) !important;
     box-sizing: border-box !important;
-    z-index: 950 !important;
+    z-index: 9999 !important;
   }
 
   .tab-item {
-    height: 100%;
+    height: 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1325,7 +1326,7 @@ input, select, textarea {
     height: 100%;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 20px)) !important;
     box-sizing: border-box;
   }
 
