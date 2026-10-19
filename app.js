@@ -341,10 +341,9 @@
       attributionControl: false
     }).setView([STATE.currentLocation.lat, STATE.currentLocation.lng], 13);
 
-    // Tier-1 Native Map Tiles: CartoDB Voyager (Apple Maps / Uber aesthetic)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // OpenStreetMap High-Resolution Tiles (100% Free, Zero API Keys, Zero Watermarks)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      subdomains: 'abcd',
       attribution: false
     }).addTo(leafletMap);
 
@@ -1392,7 +1391,7 @@
             <img src="${photoSrc}" alt="Proof">
           </div>
         </td>
-        <td><span class="status-badge-verified">✓ Signed</span></td>
+        <td><span class="status-badge-verified"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline-block; vertical-align:middle; margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>Signed</span></td>
         <td><span class="status-badge-verified">&le; ${gpsVal}</span></td>
       `;
 
@@ -1730,6 +1729,25 @@
       if (activeScreen) {
         activeScreen.classList.add('active');
         activeScreen.scrollTop = 0;
+      }
+
+      // Contextual Header Synchronization
+      const locTrigger = document.getElementById('locationSelectorTrigger');
+      const gpsBtn = document.getElementById('btnGpsAutodetect');
+      const screenTitleWrap = document.getElementById('topbarScreenTitle');
+      const screenTitleText = document.getElementById('topbarScreenTitleText');
+
+      if (tabName === 'home' || tabName === 'map') {
+        if (locTrigger) locTrigger.style.display = 'flex';
+        if (gpsBtn) gpsBtn.style.display = 'flex';
+        if (screenTitleWrap) screenTitleWrap.style.display = 'none';
+      } else {
+        if (locTrigger) locTrigger.style.display = 'none';
+        if (gpsBtn) gpsBtn.style.display = 'none';
+        if (screenTitleWrap) screenTitleWrap.style.display = 'flex';
+        if (screenTitleText) {
+          screenTitleText.textContent = tabName === 'vault' ? 'Service Proof Vault' : 'Account & Portal Settings';
+        }
       }
 
       // If switching to Map, invalidate leaflet map size so tiles render instantly

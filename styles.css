@@ -98,10 +98,22 @@ input, select, textarea {
 }
 
 /* ==========================================================================
-   1. TOP APPLICATION BAR (PERFECT HORIZONTAL ALIGNMENT & RESPONSIVE GAP)
+   1. APP SHELL & TOP APPLICATION BAR
    ========================================================================== */
 
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--bg-app);
+}
+
 .app-topbar {
+  flex-shrink: 0;
   background: #ffffff;
   border-bottom: 1px solid var(--border-light);
   position: relative;
@@ -114,6 +126,25 @@ input, select, textarea {
   padding-right: max(16px, env(safe-area-inset-right));
   box-sizing: border-box;
   min-height: calc(var(--topbar-height) + env(safe-area-inset-top));
+}
+
+.topbar-screen-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.topbar-screen-title span {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topbar-inner {
@@ -318,8 +349,9 @@ input, select, textarea {
    ========================================================================== */
 
 .app-viewport-shell {
-  height: calc(100vh - var(--topbar-height));
-  width: 100vw;
+  flex: 1 1 0%;
+  min-height: 0;
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -1070,14 +1102,14 @@ input, select, textarea {
 
 .mobile-native-tabbar {
   display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 950;
+  flex-shrink: 0;
+  width: 100%;
+  height: calc(52px + env(safe-area-inset-bottom, 0px));
+  max-height: calc(52px + env(safe-area-inset-bottom, 0px));
   background: #ffffff;
   border-top: 1px solid var(--border-light);
   box-sizing: border-box;
+  z-index: 950;
 }
 
 @media (max-width: 860px) {
@@ -1087,6 +1119,8 @@ input, select, textarea {
 
   .mobile-native-tabbar {
     display: flex !important;
+    flex-shrink: 0 !important;
+    width: 100% !important;
     height: calc(52px + env(safe-area-inset-bottom, 0px)) !important;
     max-height: calc(52px + env(safe-area-inset-bottom, 0px)) !important;
     padding-top: 4px !important;
@@ -1107,7 +1141,7 @@ input, select, textarea {
     justify-content: center;
     gap: 3px;
     color: #64748b;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     background: transparent;
     border: none;
@@ -1131,10 +1165,6 @@ input, select, textarea {
   .tab-item.active svg {
     stroke: #059669;
     stroke-width: 2.3;
-  }
-
-  .app-viewport-shell {
-    height: calc(100dvh - var(--topbar-height) - env(safe-area-inset-top, 0px));
   }
 
   #portalCustomerApp.active {
@@ -3307,40 +3337,7 @@ input, select, textarea {
   background: #000000;
 }
 
-
 @media (max-width: 860px) {
-  /* Ultra-Premium Floating Glass Topbar (Uber / Apple Maps style) */
-  .app-topbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: transparent !important;
-    border-bottom: none !important;
-    z-index: 999;
-    pointer-events: none;
-    padding: max(10px, env(safe-area-inset-top)) 14px 6px 14px;
-    min-height: auto;
-  }
-
-  .topbar-inner {
-    pointer-events: auto;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-radius: 9999px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    padding: 6px 12px;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
   .topbar-brand {
     display: none !important;
   }
@@ -3352,20 +3349,22 @@ input, select, textarea {
   .location-selector-trigger {
     flex: 1;
     min-width: 0;
-    background: transparent;
-    border: none;
-    padding: 2px 4px;
-    box-shadow: none;
+    max-width: 100%;
   }
 
-  .location-display-text {
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: var(--text-primary);
+  .tab-screen-container {
+    padding: 16px 14px 40px;
   }
 
-  .app-viewport-shell {
-    height: 100dvh !important;
-    padding-top: 0 !important;
+  .tab-section-header {
+    margin-bottom: 14px;
+  }
+
+  .tab-section-title {
+    display: none;
+  }
+
+  .tab-section-sub {
+    font-size: 0.82rem;
   }
 }
