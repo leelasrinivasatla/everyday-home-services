@@ -1491,6 +1491,7 @@
     }
 
     STATE.currentUser.role = role;
+    syncAccountTabDetails();
     savePlatformState();
   }
 
@@ -1672,43 +1673,127 @@
   }
 
   // Mobile Bottom Tab Bar Navigation
+  // Mobile & Desktop Tab Navigation Router
   function setupMobileTabbar() {
+    const tabMap = {
+      map: 'tabViewMap',
+      services: 'tabViewServices',
+      vault: 'tabViewVault',
+      account: 'tabViewAccount'
+    };
+
+    function activateCustomerTab(tabName) {
+      // Synchronize bottom tabbar buttons
+      document.querySelectorAll('.tab-item').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab-action') === tabName);
+      });
+
+      // Switch active screen
+      document.querySelectorAll('.customer-tab-screen').forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      const activeScreenId = tabMap[tabName] || 'tabViewMap';
+      const activeScreen = document.getElementById(activeScreenId);
+      if (activeScreen) {
+        activeScreen.classList.add('active');
+        activeScreen.scrollTop = 0;
+      }
+
+      // If switching to Map, invalidate leaflet map size so tiles render instantly
+      if (tabName === 'map' && leafletMap) {
+        setTimeout(() => {
+          leafletMap.invalidateSize();
+          leafletMap.setView([STATE.currentLocation.lat, STATE.currentLocation.lng], 13);
+        }, 80);
+      } else if (tabName === 'vault') {
+        renderVaultList();
+      } else if (tabName === 'account') {
+        syncAccountTabDetails();
+      }
+    }
+
     document.querySelectorAll('.tab-item').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
         const act = btn.getAttribute('data-tab-action');
-        const drawer = document.getElementById('appSidebarDrawer');
-
-        if (act === 'map') {
-          if (drawer && window.innerWidth <= 860) {
-            drawer.style.height = '42%';
-          }
-          if (leafletMap) leafletMap.setView([STATE.currentLocation.lat, STATE.currentLocation.lng], 13);
-        } else if (act === 'services') {
-          if (drawer && window.innerWidth <= 860) {
-            drawer.style.height = '82%';
-            drawer.querySelector('.drawer-scroll-body').scrollTop = 260;
-          }
-        } else if (act === 'vault') {
-          if (drawer && window.innerWidth <= 860) {
-            drawer.style.height = '82%';
-            drawer.querySelector('.drawer-scroll-body').scrollTop = 600;
-          }
-        } else if (act === 'account') {
-          openModal('modalAccountMenu');
-        }
+        activateCustomerTab(act);
       });
     });
 
-    // Mobile Drawer Grabber toggle
-    const grabber = document.getElementById('drawerGrabberBar');
-    const drawer = document.getElementById('appSidebarDrawer');
-    let expanded = false;
-    grabber?.addEventListener('click', () => {
-      expanded = !expanded;
-      if (drawer) drawer.style.height = expanded ? '85%' : '45%';
+    // Floating pill on map: "Browse All Services"
+    document.getElementById('btnMapQuickBrowse')?.addEventListener('click', () => {
+      activateCustomerTab('services');
+    });
+
+    // Topbar brand logo click navigates to Map
+    document.getElementById('topbarBrandBtn')?.addEventListener('click', () => {
+      activateCustomerTab('map');
+    });
+
+    // Topbar avatar click on mobile directly opens Account tab!
+    document.getElementById('userMenuBtn')?.addEventListener('click', () => {
+      activateCustomerTab('account');
+    });
+
+    // Account tab buttons in Account screen
+    document.getElementById('btnOpenAuthFromTab')?.addEventListener('click', () => {
+      openModal('modalAuthLogin');
+    });
+
+    document.getElementById('btnResetStateFromTab')?.addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      showToast('Restoring Prototype', 'Resetting test environment to clean defaults...');
+      setTimeout(() => {
+        window.location.reload();
+      }, 400);
+    });
+
+    document.getElementById('btnSignOutFromTab')?.addEventListener('click', () => {
+      openModal('modalAuthLogin');
+      showToast('Signed Out', 'Account session ended. Choose an account to sign in.');
+    });
+
+    // Category filter chips in Services catalog
+    document.querySelectorAll('.catalog-filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.catalog-filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const filter = chip.getAttribute('data-filter');
+        document.querySelectorAll('.app-service-card').forEach(card => {
+          const key = card.getAttribute('data-service-key');
+          if (filter === 'all' || key === filter || (filter === 'curbside' && key === 'bin') || (filter === 'salt' && key === 'salt') || (filter === 'bulb' && key === 'bulb') || (filter === 'junk' && key === 'junk')) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  function syncAccountTabDetails() {
+    const avatar = document.getElementById('tabAccAvatarLarge');
+    const name = document.getElementById('tabAccUserName');
+    const role = document.getElementById('tabAccUserRole');
+    const email = document.getElementById('tabAccUserEmail');
+
+    if (avatar) avatar.textContent = STATE.currentUser.avatar || 'AT';
+    if (name) name.textContent = STATE.currentUser.name || 'Alexandre Tremblay';
+    if (role) {
+      const roleMap = {
+        customer: 'Homeowner Account',
+        partner_approved: 'Active Partner Driver (Van #4)',
+        partner_pending: 'Applicant (Pending Compliance)',
+        admin: 'Logistics & Dispatch Administration'
+      };
+      role.textContent = roleMap[STATE.currentUser.role] || 'Homeowner Account';
+    }
+    if (email) email.textContent = STATE.currentUser.email || 'alexandre@everydayhelp.com';
+
+    // Sync active highlight in portal switch list
+    document.querySelectorAll('.portal-switch-item').forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-switch-role') === STATE.currentUser.role);
     });
   }
 

@@ -96,17 +96,35 @@
     <!-- ==================================================================== -->
     <div class="portal-root active" id="portalCustomerApp">
       
-      <!-- DESKTOP LEFT SIDEBAR / MOBILE SLIDING APP DRAWER -->
-      <aside class="app-sidebar-drawer" id="appSidebarDrawer">
+      <!-- ================================================================== -->
+      <!-- TAB SCREEN 1: MAP & REALTIME DISPATCH TRACKER                      -->
+      <!-- ================================================================== -->
+      <section class="customer-tab-screen active" id="tabViewMap" aria-label="Live map and tracking">
         
-        <!-- Mobile Drawer Grabber / Drag Indicator -->
-        <div class="drawer-grabber-bar" id="drawerGrabberBar"></div>
-
-        <!-- Scrollable Drawer Content -->
-        <div class="drawer-scroll-body">
+        <!-- Real Interactive Leaflet Map Canvas -->
+        <div class="app-map-canvas-container" id="appMapCanvasContainer">
           
-          <!-- SUB-VIEW A: ACTIVE REALTIME SERVICE TRACKING CARD -->
-          <div class="active-job-tracker-card" id="activeJobTrackerCard">
+          <!-- The Real Leaflet Map DIV -->
+          <div id="realLeafletMap" class="real-leaflet-map-element" role="region" aria-label="Interactive service map"></div>
+
+          <!-- Floating Map Recenter Controls -->
+          <div class="map-floating-actions">
+            <button class="btn-map-control" id="btnRecenterHome" title="Center map on your address" aria-label="Center on property">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b0f19" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            </button>
+            <button class="btn-map-control" id="btnRecenterDriver" title="Center map on driver Marcus Chen" aria-label="Center on driver">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            </button>
+          </div>
+
+          <!-- Floating Map Shortcut: Browse Catalog Pill -->
+          <button class="map-floating-browse-pill" id="btnMapQuickBrowse" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Browse All Services</span>
+          </button>
+
+          <!-- COMPACT FLOATING ACTIVE JOB TRACKER SHEET -->
+          <div class="active-job-tracker-card floating-map-card" id="activeJobTrackerCard">
             <div class="job-tracker-header">
               <div class="job-status-pill">
                 <span class="live-pulse-dot"></span>
@@ -160,10 +178,30 @@
             </div>
           </div>
 
-          <!-- SECTION: RECURRING CHORES & SERVICES (Actionable Cards) -->
-          <div class="drawer-section-title">
-            <span>On-Demand & Recurring Services</span>
-            <span class="drawer-section-sub">Tap to customize</span>
+        </div>
+      </section>
+
+      <!-- ================================================================== -->
+      <!-- TAB SCREEN 2: SERVICES & PLANS (DEDICATED FULLSCREEN STORE)        -->
+      <!-- ================================================================== -->
+      <section class="customer-tab-screen" id="tabViewServices" aria-label="Services Catalog">
+        <div class="tab-screen-container">
+          
+          <!-- Category Quick Filter Bar -->
+          <div class="catalog-filters-bar">
+            <button class="catalog-filter-chip active" data-filter="all">All Services</button>
+            <button class="catalog-filter-chip" data-filter="curbside">Curbside Bins ($49)</button>
+            <button class="catalog-filter-chip" data-filter="salt">Salt Refills ($89)</button>
+            <button class="catalog-filter-chip" data-filter="bulb">Bulb Replacement</button>
+            <button class="catalog-filter-chip" data-filter="junk">Junk Haul Away</button>
+          </div>
+
+          <!-- Section: 4 Core Services -->
+          <div class="tab-section-header">
+            <div>
+              <h2 class="tab-section-title">On-Demand & Recurring Services</h2>
+              <p class="tab-section-sub">Scheduled routine chores completed by verified neighborhood technicians.</p>
+            </div>
           </div>
 
           <div class="service-app-cards-list">
@@ -243,9 +281,11 @@
           </div>
 
           <!-- SECTION: SUBSCRIPTION TIERS (Single vs Duo vs Elite) -->
-          <div class="drawer-section-title" style="margin-top: 24px;">
-            <span>Subscription Bundles</span>
-            <span class="drawer-section-sub">Save up to 40%</span>
+          <div class="tab-section-header" style="margin-top: 32px;">
+            <div>
+              <h2 class="tab-section-title">Subscription Bundles</h2>
+              <p class="tab-section-sub">Bundle essential utility services for maximum monthly savings.</p>
+            </div>
           </div>
 
           <div class="subscription-compact-tiers">
@@ -307,44 +347,100 @@
             </div>
           </div>
 
-          <!-- SECTION: AUDITED PROOF VAULT -->
-          <div class="drawer-section-title" style="margin-top: 24px;">
-            <span>Past Service Proof Vault</span>
-            <span class="drawer-section-sub">Verified GPS & Photos</span>
+        </div>
+      </section>
+
+      <!-- ================================================================== -->
+      <!-- TAB SCREEN 3: VERIFIED PROOF VAULT (DEDICATED FULLSCREEN AUDIT)    -->
+      <!-- ================================================================== -->
+      <section class="customer-tab-screen" id="tabViewVault" aria-label="Past Service Proof Vault">
+        <div class="tab-screen-container">
+          <div class="tab-section-header">
+            <div>
+              <h2 class="tab-section-title">Past Service Proof Vault</h2>
+              <p class="tab-section-sub">Cryptographically verified photo records, GPS geofences, and customer signatures.</p>
+            </div>
+            <span class="vault-audit-shield-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Verified Geofence &le; 4.8m
+            </span>
           </div>
 
           <div class="vault-compact-list" id="vaultCompactList">
             <!-- Dynamically populated from STATE.bookings -->
           </div>
-
         </div>
-      </aside>
+      </section>
 
-      <!-- REAL INTERACTIVE LEAFLET MAP CANVAS -->
-      <section class="app-map-canvas-container" id="appMapCanvasContainer">
-        
-        <!-- Mobile Category Quick Filter Horizontal Bar (Floating over map) -->
-        <div class="mobile-map-floating-filters" id="mobileMapFloatingFilters">
-          <button class="map-filter-chip active" data-filter="all">All Services</button>
-          <button class="map-filter-chip" data-filter="curbside">Curbside Bins ($49)</button>
-          <button class="map-filter-chip" data-filter="water">Salt Refills ($89)</button>
-          <button class="map-filter-chip" data-filter="safety">High Bulbs</button>
-          <button class="map-filter-chip" data-filter="hauling">Junk Haul</button>
-        </div>
+      <!-- ================================================================== -->
+      <!-- TAB SCREEN 4: MY ACCOUNT & PROFILE (DEDICATED FULLSCREEN VIEW)     -->
+      <!-- ================================================================== -->
+      <section class="customer-tab-screen" id="tabViewAccount" aria-label="My Account">
+        <div class="tab-screen-container" style="max-width: 640px;">
+          <div class="tab-section-header">
+            <div>
+              <h2 class="tab-section-title">My Account & Portal Settings</h2>
+              <p class="tab-section-sub">Manage active addresses, billing frequency, and switch demonstration accounts.</p>
+            </div>
+          </div>
 
-        <!-- The Real Leaflet Map DIV -->
-        <div id="realLeafletMap" class="real-leaflet-map-element" role="region" aria-label="Interactive service map"></div>
+          <div class="account-profile-card">
+            <div class="account-avatar-circle" id="tabAccAvatarLarge">AT</div>
+            <div>
+              <div class="account-user-name" id="tabAccUserName">Alexandre Tremblay</div>
+              <div class="account-user-role" id="tabAccUserRole">Homeowner Account</div>
+              <div class="account-user-email" id="tabAccUserEmail">alexandre@everydayhelp.com</div>
+            </div>
+          </div>
 
-        <!-- Map Control Overlay Buttons -->
-        <div class="map-floating-actions">
-          <button class="btn-map-control" id="btnRecenterHome" title="Center map on your address" aria-label="Center on property">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b0f19" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+          <div class="app-field-label" style="margin-top: 24px; margin-bottom: 8px;">Switch Role Portal</div>
+          <div class="portal-switch-list">
+            <button class="portal-switch-item active" data-switch-role="customer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+              <div>
+                <strong>Customer App (Homeowner)</strong>
+                <span>Live map, on-demand utility booking & radar</span>
+              </div>
+            </button>
+
+            <button class="portal-switch-item" data-switch-role="partner_approved">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              <div>
+                <strong>Driver Field Terminal (Marcus Chen)</strong>
+                <span>10-stop sequenced route, maps nav & proof capture</span>
+              </div>
+            </button>
+
+            <button class="portal-switch-item" data-switch-role="partner_pending">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <div>
+                <strong>Driver Onboarding (David Miller)</strong>
+                <span>Vehicle, Checkr background audit & compliance</span>
+              </div>
+            </button>
+
+            <button class="portal-switch-item" data-switch-role="admin">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              <div>
+                <strong>Operations HQ & Logistics Cockpit</strong>
+                <span>Fleet KPIs, 1-click approvals & webhook stream</span>
+              </div>
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 22px;">
+            <button class="btn-app-secondary" id="btnOpenAuthFromTab" style="flex: 1;">
+              Sign In / Switch Account
+            </button>
+            <button class="btn-app-secondary" id="btnResetStateFromTab" style="color: #64748b;" title="Reset test data to initial prototype state">
+              Reset Test Data
+            </button>
+          </div>
+
+          <button class="btn-app-secondary" id="btnSignOutFromTab" style="width: 100%; margin-top: 12px; color: #dc2626; border-color: #fecaca;">
+            Sign Out of Account
           </button>
-          <button class="btn-map-control" id="btnRecenterDriver" title="Center map on driver Marcus Chen" aria-label="Center on driver">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-          </button>
         </div>
-
       </section>
 
     </div>
