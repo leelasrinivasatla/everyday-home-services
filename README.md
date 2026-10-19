@@ -1,5 +1,8 @@
 # Everyday Home Services | Native Map-First Utility Platform
 
+> **Live Production URL**: [https://leelasrinivasatla.github.io/everyday-home-services/](https://leelasrinivasatla.github.io/everyday-home-services/)  
+> **GitHub Repository**: [https://github.com/leelasrinivasatla/everyday-home-services](https://github.com/leelasrinivasatla/everyday-home-services)
+
 A production-grade, on-demand and subscription recurring home services Progressive Web Application (PWA). Built with real-world app ergonomics (modeled after Uber / DoorDash), featuring genuine Leaflet.js maps, browser GPS auto-detection, zero marketing landing page fluff, monochromatic SVG iconography, and authentic mobile app ergonomics.
 
 ---
