@@ -158,6 +158,17 @@ input, select, textarea {
 }
 
 /* Location Selector Trigger (Uber Style, Flexes Gracefully) */
+
+@media (max-width: 640px) {
+  .topbar-brand {
+    display: none !important;
+  }
+  .location-selector-trigger {
+    max-width: 100% !important;
+    flex: 1 !important;
+  }
+}
+
 .location-selector-trigger {
   display: flex;
   align-items: center;
@@ -372,44 +383,52 @@ input, select, textarea {
   scrollbar-width: none;
 }
 
+
 /* ==========================================================================
-   2.1 HOME TAB STOREFRONT & DISCOVERY COMPONENTS
+   2.1 HOME TAB STOREFRONT & NATIVE MOBILE DISCOVERY COMPONENTS
    ========================================================================== */
 
+/* Compact Live Activity Dynamic Capsule */
 .home-live-tracker-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #0f172a;
+  background: linear-gradient(135deg, #090d16 0%, #151e2e 100%);
   color: #ffffff;
-  border-radius: var(--radius-lg);
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  min-height: 52px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(9, 13, 22, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   transition: transform var(--trans-fast), box-shadow var(--trans-fast);
 }
 
 .home-live-tracker-banner:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(9, 13, 22, 0.22);
+}
+
+.home-live-tracker-banner:active {
+  transform: scale(0.99);
 }
 
 .tracker-banner-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
+  flex: 1;
 }
 
 .tracker-pulse-ring {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   background: rgba(16, 185, 129, 0.15);
   border-radius: var(--radius-full);
   flex-shrink: 0;
@@ -423,27 +442,28 @@ input, select, textarea {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 700;
   color: #ffffff;
+  line-height: 1.2;
 }
 
 .tracker-eta-badge {
   background: #059669;
   color: #ffffff;
-  font-size: 0.70rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: var(--radius-full);
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  flex-shrink: 0;
 }
 
 .tracker-banner-sub {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: #94a3b8;
-  margin: 3px 0 0;
+  margin: 2px 0 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -452,447 +472,358 @@ input, select, textarea {
 .btn-banner-track {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: #ffffff;
   color: #0f172a;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background var(--trans-fast);
+  transition: all var(--trans-fast);
 }
 
 .btn-banner-track:hover {
   background: #f1f5f9;
 }
 
-.home-hero-card {
-  background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
-  border-radius: var(--radius-xl);
-  padding: 28px 24px;
-  color: #ffffff;
-  margin-bottom: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 12px;
-}
-
-.hero-headline {
-  font-size: 1.45rem;
-  font-weight: 900;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  margin: 0 0 8px;
-  color: #ffffff;
-}
-
-.hero-subhead {
-  font-size: 0.86rem;
-  color: #94a3b8;
-  line-height: 1.45;
-  margin: 0 0 18px;
-}
-
-.hero-quick-search-box {
+/* Native Floating Search Bar (DoorDash/Apple style) */
+.home-native-search-bar {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-lg);
-  padding: 10px 14px;
-  backdrop-filter: blur(8px);
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  padding: 11px 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all var(--trans-fast);
 }
 
-.hero-search-input {
+.home-native-search-bar:focus-within {
+  border-color: var(--emerald-primary);
+  box-shadow: 0 0 0 3px var(--emerald-glow), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.home-native-search-input {
   background: transparent;
   border: none;
   outline: none;
-  color: #ffffff;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
+  color: var(--text-primary);
   width: 100%;
 }
 
-.hero-search-input::placeholder {
+.home-native-search-input::placeholder {
   color: #94a3b8;
 }
 
-.home-trust-grid {
+/* 4-Column Quick Action Category Hub (iOS Squircle Grid) */
+.home-category-hub {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.home-trust-card {
-  background: #ffffff;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.trust-icon-box {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  background: #f0fdf4;
-  color: #059669;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.trust-card-title {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  margin: 0 0 2px;
-}
-
-.trust-card-desc {
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  line-height: 1.35;
-  margin: 0;
-}
-
-.catalog-filters-bar::-webkit-scrollbar {
-  display: none;
-}
-
-.catalog-filter-chip {
-  flex-shrink: 0;
-  background: #ffffff;
-  border: 1.5px solid var(--border-light);
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 8px 16px;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all var(--trans-fast);
-}
-
-.catalog-filter-chip:hover,
-.catalog-filter-chip.active {
-  background: var(--bg-dark-obsidian);
-  color: #ffffff;
-  border-color: var(--bg-dark-obsidian);
-  box-shadow: var(--shadow-sm);
-}
-
-.tab-section-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.tab-section-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.tab-section-sub {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.vault-audit-shield-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--emerald-soft);
-  border: 1px solid var(--emerald-border);
-  color: var(--emerald-primary);
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  flex-shrink: 0;
-}
-
-/* Floating Browse All Services Pill on Map */
-.map-floating-browse-pill {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 450;
-  background: var(--bg-dark-obsidian);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
-  border-radius: var(--radius-full);
-  padding: 8px 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--trans-fast);
-}
-
-.map-floating-browse-pill:hover {
-  background: #1e293b;
-  transform: translateX(-50%) scale(1.03);
-}
-
-/* Real Leaflet Map Container */
-.app-map-canvas-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background: #f1f5f9;
-}
-
-.real-leaflet-map-element {
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-}
-
-/* Floating Recenter Buttons */
-.map-floating-actions {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 400;
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  margin-bottom: 22px;
 }
 
-.btn-map-control {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+.hub-tile {
   background: #ffffff;
   border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--trans-fast);
-}
-
-.btn-map-control:hover {
-  transform: scale(1.05);
-}
-
-/* ==========================================================================
-   3. ACTIVE TRACKER CARD (PIXEL-PERFECT STEPPER & ALIGNMENT)
-   ========================================================================== */
-
-.active-job-tracker-card {
-  background: var(--bg-dark-obsidian);
-  color: #ffffff;
   border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.job-tracker-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.job-status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #34d399;
-}
-
-.job-eta-text {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.job-technician-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.tech-avatar-circle {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: #1e293b;
-  border: 2px solid var(--emerald-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1rem;
-  color: #ffffff;
-  flex-shrink: 0;
-}
-
-.tech-details-col {
-  flex: 1;
-  min-width: 0;
-}
-
-.tech-fullname {
-  font-size: 0.96rem;
-  font-weight: 800;
-  line-height: 1.25;
-}
-
-.tech-vehicle-sub {
-  font-size: 0.74rem;
-  color: #94a3b8;
-  margin-top: 2px;
-}
-
-.tech-job-title {
-  font-size: 0.8rem;
-  color: #34d399;
-  font-weight: 700;
-  margin-top: 4px;
-}
-
-/* Pixel-Perfect Stepper */
-.job-milestones-row {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 18px 8px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin: 14px 0 16px;
-}
-
-.milestones-track-rail {
-  position: absolute;
-  top: 24px;
-  left: 32px;
-  right: 32px;
-  height: 2px;
-  background: #334155;
-  z-index: 1;
-}
-
-.milestones-track-progress {
-  height: 100%;
-  background: var(--emerald-primary);
-  width: 33%;
-  transition: width var(--trans-smooth);
-}
-
-.milestone-node {
+  padding: 12px 6px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  position: relative;
-  z-index: 2;
-  width: 64px;
-}
-
-.node-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #1e293b;
-  border: 2px solid #475569;
-  margin-bottom: 7px;
-  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   transition: all var(--trans-fast);
+  user-select: none;
 }
 
-.milestone-node.done .node-dot {
-  background: var(--emerald-primary);
-  border-color: var(--emerald-primary);
+.hub-tile:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
 }
 
-.milestone-node.done .node-lbl {
-  color: #ffffff;
+.hub-tile:active {
+  transform: scale(0.95);
 }
 
-.milestone-node.active .node-dot {
-  background: #34d399;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.28);
-}
-
-.milestone-node.active .node-lbl {
-  color: #34d399;
-}
-
-.node-lbl {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #94a3b8;
-  line-height: 1.25;
-}
-
-/* Job Action Buttons */
-.job-actions-row {
-  display: flex;
-  gap: 12px;
-}
-
-.btn-job-action {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 11px 16px;
-  border-radius: var(--radius-sm);
+.hub-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 8px;
+  transition: transform var(--trans-fast);
+}
+
+.hub-tile:hover .hub-icon-box {
+  transform: scale(1.06);
+}
+
+.hub-bin { background: #ecfdf5; border: 1px solid #a7f3d0; }
+.hub-salt { background: #eff6ff; border: 1px solid #bfdbfe; }
+.hub-bulb { background: #fffbeb; border: 1px solid #fde68a; }
+.hub-junk { background: #f5f3ff; border: 1px solid #ddd6fe; }
+
+.hub-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.hub-price {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--emerald-primary);
+  background: var(--emerald-soft);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* Featured Routine Card: Everyday Duo Plan Banner */
+.home-membership-banner {
+  background: linear-gradient(135deg, #090d16 0%, #151e2e 100%);
+  border-radius: var(--radius-xl);
+  padding: 20px 22px;
+  color: #ffffff;
+  margin-bottom: 26px;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 8px 24px rgba(9, 13, 22, 0.12);
+  cursor: pointer;
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.home-membership-banner:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(9, 13, 22, 0.18);
+}
+
+.home-membership-banner:active {
+  transform: scale(0.99);
+}
+
+.membership-banner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.membership-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+
+.membership-save-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+.membership-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.membership-text-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.membership-heading {
+  font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.membership-sub {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 0 0 10px;
+}
+
+.membership-feature-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.70rem;
+  color: #a7f3d0;
+  font-weight: 600;
+}
+
+.membership-action-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.membership-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.membership-amount {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+}
+
+.membership-cadence {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+.btn-membership-action {
+  background: var(--emerald-primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px var(--emerald-glow);
   transition: all var(--trans-fast);
 }
 
-.btn-job-action:hover {
-  background: rgba(255, 255, 255, 0.2);
+.btn-membership-action:hover {
+  background: var(--emerald-hover);
 }
+
+@media (max-width: 520px) {
+  .membership-banner-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .membership-action-col {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Service Card Image Badge */
+.app-card-thumb {
+  position: relative;
+}
+
+.card-image-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: rgba(11, 15, 25, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.section-badge-counter {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-surface-subtle);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+}
+
+/* 2-Column Responsive Card Grid on Mobile & Tablet */
+@media (max-width: 768px) {
+  .service-app-cards-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .app-service-card {
+    flex-direction: column !important;
+    padding: 10px !important;
+    border-radius: var(--radius-md) !important;
+    gap: 10px !important;
+  }
+
+  .app-card-thumb {
+    width: 100% !important;
+    height: 110px !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  .app-card-info {
+    width: 100% !important;
+  }
+
+  .app-card-title {
+    font-size: 0.84rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .app-card-sub {
+    font-size: 0.72rem !important;
+    margin-bottom: 6px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .app-card-badge {
+    display: none !important;
+  }
+
+  .app-card-bottom-row {
+    margin-top: 4px !important;
+  }
+
+  .btn-card-book {
+    width: 100% !important;
+    padding: 7px 10px !important;
+    font-size: 0.76rem !important;
+    justify-content: center !important;
+  }
+}
+
 
 /* ==========================================================================
    4. SERVICE APP CARDS & TIERS IN DRAWER (SPACIOUS & DE-CONGESTED)
